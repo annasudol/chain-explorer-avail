@@ -5,7 +5,7 @@ import type { Hash } from 'viem';
 import type {
   ButtonLeftIcon,
   ButtonRightIcon,
-} from '@/components/button/MyButton';
+} from '@/components/ui/button/MyButton';
 import type { TxAlertProps } from '@/components/TxAlert';
 
 export type TransactionStatus = 'pending' | 'success' | 'failed';

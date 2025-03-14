@@ -7,7 +7,7 @@ import type {
   TransactionStatus,
 } from '@/providers/TransactionProvider';
 
-import { MyButton } from './button/MyButton';
+import { MyButton } from './ui/button/MyButton';
 
 export interface TxAlertProps extends TransactionMessage {
   chain?: Chain;

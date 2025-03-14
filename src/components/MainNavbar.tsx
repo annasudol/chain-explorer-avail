@@ -1,6 +1,6 @@
 import { Link, Navbar } from '@nextui-org/react';
 
-import MyConnectButton from '@/components/button/MyConnectButton';
+import MyConnectButton from '@/components/ui/button/MyConnectButton';
 import { siteConfig } from '@/config/siteConfig';
 
 const MainNavbar = () => (

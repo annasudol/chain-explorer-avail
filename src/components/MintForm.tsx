@@ -2,7 +2,7 @@ import type { FormikErrors } from 'formik';
 import { Formik } from 'formik';
 import React from 'react';
 
-import { SubmitButton } from '@/components/button/SubmitButton';
+import { SubmitButton } from '@/components/ui/button/SubmitButton';
 import { Loading } from '@/components/Loading';
 import { TokenTinput } from '@/components/TokenTinput';
 import { useMintMutation } from '@/hooks/mutations/useMintMutation';

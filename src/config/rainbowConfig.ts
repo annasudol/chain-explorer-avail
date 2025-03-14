@@ -7,8 +7,6 @@ import { envs } from '@/lib/envs';
 
 import { siteConfig } from './siteConfig';
 
-export const T_SEPOLIA_RPC_URL = `https://sepolia.gateway.tenderly.co/${envs.NEXT_PUBLIC_TENDERLY_PROJECT_ID}`;
-
 export const rainbowConfig = getDefaultConfig({
   appName: siteConfig.title,
   projectId: envs.NEXT_PUBLIC_RAINBOWKIT_PROJECT_ID,
