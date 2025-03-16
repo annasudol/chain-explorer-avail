@@ -1,8 +1,6 @@
 "use client";
 
 import { Button } from "components/ui/button";
-import { siteConfig } from "config/siteConfig";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const NotFoundPage = () => {
@@ -10,13 +8,7 @@ const NotFoundPage = () => {
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center">
-      <Image
-        src="/logo.svg"
-        width={150}
-        height={48}
-        alt={`${siteConfig.name} logo`}
-        priority={true}
-      />
+    
       <div className="text-center">
         <h1 className="mb-4 text-3xl font-bold">Not Found</h1>
         <p className="text-destructive">Could not find requested page</p>
