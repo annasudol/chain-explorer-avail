@@ -1,5 +1,5 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
@@ -33,16 +33,16 @@ export async function GET(req: NextRequest) {
 
     // Get query from URL parameters if provided
     const url = new URL(req.url);
-    const customQuery = url.searchParams.get('query');
+    const customQuery = url.searchParams.get("query");
 
     // Use custom query if provided, otherwise use default
     const query = customQuery || defaultQuery;
 
     // Send request to GraphQL API
-    const response = await fetch('https://turing-indexer.avail.so', {
-      method: 'POST',
+    const response = await fetch("https://turing-indexer.avail.so", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ query }),
     });
