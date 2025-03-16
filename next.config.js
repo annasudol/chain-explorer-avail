@@ -15,6 +15,12 @@ module.exports = withBundleAnalyzer({
   // You can remove `basePath` if you don't need it.
   reactStrictMode: true,
   crossOrigin: "use-credentials",
+  // Note: compiler options will be ignored when using Babel (.babelrc)
+  compiler: {
+    styledComponents: true,
+    // Configure styled-jsx to use PostCSS
+    emotion: false,
+  }
 });
 
 // crossOrigin: 'anonymous',
