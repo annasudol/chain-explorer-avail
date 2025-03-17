@@ -45,7 +45,7 @@ const BlockDetailsByNumber = ({ blockNumber }: { blockNumber: string }) => {
           </Card>
         </div>
       )}
-      <div className="space-y-6">
+      <div className="space-y-6 md:flex md:space-y-0">
         {blockData && (
           <BlockInfoGrid
             blockNumber={blockData.number}

@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { BlocksResponse, ExtrinsicsResponse } from "@/types/avail";
 import { envs } from "./envs";
 
+
 /**
  * Executes a GraphQL query against the Avail API.
  *
