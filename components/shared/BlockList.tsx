@@ -12,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from 'components/ui/table';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { formatDistanceToNow } from 'date-fns';
 import { fetchGraphQL, LATEST_BLOCKS_QUERY } from 'lib/graphql';
 import { ChevronsRight } from 'lucide-react';
