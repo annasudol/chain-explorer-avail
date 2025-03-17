@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useBlockDetails } from "@/lib/graphql";
+import truncateHash from "@/lib/truncateHash";
 
 const BlockDetailPage = () => {
   const { blockNumber } = useParams<{ blockNumber: string }>();
@@ -35,14 +36,12 @@ const BlockDetailPage = () => {
     }
   };
 
-  const truncateHash = (hash: string, length = 8) => {
-    if (!hash) return "";
-    return `${hash.substring(0, length)}...${hash.substring(hash.length - length)}`;
-  };
 
 
 
   const blockData = data?.blocks?.nodes?.[0];
+  // Extract extrinsics from the nested structure
+  const extrinsics = blockData?.extrinsics?.nodes || [];
 
   return (
     <div className="container space-y-8 py-10">
@@ -63,7 +62,7 @@ const BlockDetailPage = () => {
               <LoadingSkeleton count={24} />
             </CardContent>
           </Card>
-        
+
         </div>
       ) : (
         blockData && (
@@ -81,19 +80,19 @@ const BlockDetailPage = () => {
                     <p className="text-sm font-medium text-muted-foreground">Block Number</p>
                     <p>{blockData.number}</p>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <p className="text-sm font-medium text-muted-foreground">Timestamp</p>
                     <p>{formatDate(blockData.timestamp)}</p>
                   </div>
-                  
+
                   <div className="space-y-2 md:col-span-2">
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-medium text-muted-foreground">Block Hash</p>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="size-6" 
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="size-6"
                         onClick={() => copyToClipboard(blockData.hash)}
                       >
                         {copiedHash === blockData.hash ? (
@@ -109,12 +108,12 @@ const BlockDetailPage = () => {
               </CardContent>
             </Card>
 
-            {blockData.extrinsics?.nodes && blockData.extrinsics.nodes.length > 0 && (
+            {extrinsics.length > 0 && (
               <Card>
                 <CardHeader>
                   <CardTitle>Extrinsics</CardTitle>
                   <CardDescription>
-                    {blockData.extrinsics.nodes.length} extrinsic{blockData.extrinsics.nodes.length !== 1 ? "s" : ""} in this block
+                    {extrinsics.length} extrinsic{extrinsics.length !== 1 ? "s" : ""} in this block
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -131,17 +130,17 @@ const BlockDetailPage = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {blockData.extrinsics.nodes.map((extrinsic) => (
+                      {extrinsics.map((extrinsic) => (
                         <TableRow key={extrinsic.id}>
                           <TableCell>{extrinsic.extrinsicIndex}</TableCell>
                           <TableCell>{extrinsic.module}</TableCell>
                           <TableCell>
                             <div className="flex items-center gap-2">
                               <span className="font-mono">{truncateHash(extrinsic.hash)}</span>
-                              <Button 
-                                variant="ghost" 
-                                size="icon" 
-                                className="size-6" 
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="size-6"
                                 onClick={() => copyToClipboard(extrinsic.hash)}
                               >
                                 {copiedHash === extrinsic.hash ? (
@@ -157,10 +156,10 @@ const BlockDetailPage = () => {
                             {extrinsic.signer ? (
                               <div className="flex items-center gap-2">
                                 <span className="font-mono">{truncateHash(extrinsic.signer, 6)}</span>
-                                <Button 
-                                  variant="ghost" 
-                                  size="icon" 
-                                  className="size-6" 
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="size-6"
                                   onClick={() => copyToClipboard(extrinsic.signer)}
                                 >
                                   {copiedHash === extrinsic.signer ? (
