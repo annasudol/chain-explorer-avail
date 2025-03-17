@@ -10,9 +10,9 @@ import {
 import { formatDistanceToNow } from "date-fns";
 import { useGetLatestExtrinsic } from "lib/graphql";
 import BadgeInfo from "components/shared/BadgeInfo";
-import ErrorMessage from "@/components/shared/ErrorMessage";
+import { ErrorMessage } from "@/components/shared/ErrorMessage";
 
-import LoadingSkeleton from "./LoadingSkeleton";
+import { LoadingSkeleton } from "./LoadingSkeleton";
 
 const LatestTransactionsStats = () => {
   const { data, isLoading, error } = useGetLatestExtrinsic();

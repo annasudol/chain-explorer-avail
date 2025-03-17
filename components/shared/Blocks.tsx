@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -8,17 +8,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useGetBlock } from "@/lib/graphql";
 
-import BlockTable from "./BlockTable";
-import ErrorMessage from "./ErrorMessage";
-import LoadingSkeleton from "./LoadingSkeleton";
+import { BlockTable } from "./BlockTable";
+import { ErrorMessage } from "./ErrorMessage";
+import { LoadingSkeleton } from "./LoadingSkeleton";
+import { Pagination } from "@/components/ui/pagination";
+import { PageInfoType } from "@/types";
 
-// Type for page info
-type PageInfoType = {
-  hasNextPage: boolean;
-  endCursor: string;
-};
-
-// Search Form Component
 type SearchFormProps = {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
@@ -41,38 +36,6 @@ const SearchForm = ({
       <Search className="mr-2 size-4" /> Search
     </Button>
   </form>
-);
-
-// Pagination Component
-type PaginationProps = {
-  cursor?: string;
-  setCursor: (cursor?: string) => void;
-  pageInfo?: PageInfoType | null;
-};
-
-const Pagination = ({ cursor, setCursor, pageInfo }: PaginationProps) => (
-  <div className="mt-4 flex items-center justify-end space-x-2">
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={() => setCursor(undefined)}
-      disabled={!cursor}
-    >
-      <ChevronLeft className="mr-1 size-4" /> First Page
-    </Button>
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={() => {
-        if (pageInfo?.hasNextPage && pageInfo?.endCursor) {
-          setCursor(pageInfo.endCursor);
-        }
-      }}
-      disabled={!pageInfo?.hasNextPage}
-    >
-      Next Page <ChevronRight className="ml-1 size-4" />
-    </Button>
-  </div>
 );
 
 // Content Component

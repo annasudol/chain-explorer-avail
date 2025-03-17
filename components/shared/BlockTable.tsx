@@ -128,4 +128,4 @@ const BlockTable = ({ blocks, variant = "default" }: BlockTableProps) => {
   );
 };
 
-export default BlockTable;
+export { BlockTable };

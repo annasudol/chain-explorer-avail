@@ -6,9 +6,9 @@ import { useGetLatestBlock } from "lib/graphql";
 import { ChevronsRight } from "lucide-react";
 import Link from "next/link";
 
-import BlockTable from "./BlockTable";
-import ErrorMessage from "./ErrorMessage";
-import LoadingSkeleton from "./LoadingSkeleton";
+import { BlockTable } from "./BlockTable";
+import { ErrorMessage } from "./ErrorMessage";
+import { LoadingSkeleton } from "@/components/shared/LoadingSkeleton";
 
 const BlockList = ({ limit = 5 }: { limit?: number }) => {
   const { data, isLoading, error } = useGetLatestBlock(limit);

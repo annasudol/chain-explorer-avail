@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 
-import BlockDetailsByNumber from "@/components/shared/BlockDetailsByNumber";
+import { BlockDetailsByNumber } from "@/components/shared/BlockDetailsByNumber";
 
 const BlockDetailPage = () => {
   const { blockNumber } = useParams<{ blockNumber: string }>();

@@ -3,9 +3,9 @@
 import { format } from "date-fns";
 
 import BlockInfoGrid from "@/components/shared/BlockInfoGrid";
-import ErrorMessage from "@/components/shared/ErrorMessage";
-import ExtrinsicsTable from "@/components/shared/ExtrinsicsTable";
-import LoadingSkeleton from "@/components/shared/LoadingSkeleton";
+import { ErrorMessage } from "@/components/shared/ErrorMessage";
+import { ExtrinsicsTable } from "@/components/shared/ExtrinsicsTable";
+import { LoadingSkeleton } from "@/components/shared/LoadingSkeleton";
 import {
   Card,
   CardContent,
@@ -76,4 +76,4 @@ const BlockDetailsByNumber = ({ blockNumber }: { blockNumber: string }) => {
   );
 };
 
-export default BlockDetailsByNumber;
+export { BlockDetailsByNumber };

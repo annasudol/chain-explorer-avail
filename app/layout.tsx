@@ -2,7 +2,7 @@ import "@/styles/global.css";
 
 import type { Metadata } from "next";
 
-import Header from "@/components/shared/Header";
+import { Header } from "@/components/shared/Header";
 import { siteConfig } from "@/config/siteConfig";
 import { Web3Provider } from "@/providers/Web3Provider";
 

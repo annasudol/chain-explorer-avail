@@ -11,4 +11,4 @@ const LoadingSkeleton = ({ count = 10 }: { count?: number }) => (
       ))}
   </>
 );
-export default LoadingSkeleton;
+export { LoadingSkeleton };

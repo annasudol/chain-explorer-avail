@@ -109,4 +109,4 @@ const ExtrinsicsTable = ({ extrinsics, formatDate }: ExtrinsicsTableProps) => {
   );
 };
 
-export default ExtrinsicsTable;
+export { ExtrinsicsTable };

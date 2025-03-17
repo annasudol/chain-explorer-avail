@@ -7,4 +7,4 @@ const ErrorMessage = ({ message }: ErrorMessageProps) => (
   </div>
 );
 
-export default ErrorMessage;
+export { ErrorMessage };

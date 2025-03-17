@@ -1,5 +1,4 @@
-export interface CallContractStatus {
-  isLoading: boolean;
-  isError: boolean;
-  isSuccess?: boolean;
-}
+export type PageInfoType = {
+  hasNextPage: boolean;
+  endCursor: string;
+};
