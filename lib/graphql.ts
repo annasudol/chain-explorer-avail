@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query";
 
 import type { BlocksResponse, ExtrinsicsResponse } from "@/types/avail";
-import { envs } from "./envs";
 
 
 /**
@@ -17,11 +16,14 @@ import { envs } from "./envs";
 
 export const fetchGraphQL = async (query: string, variables = {}) => {
   try {
-    const response = await fetch(envs.NEXT_PUBLIC_INDEXER_URL, {
+    // const response = await fetch("/api/describe", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     image_url,
+    //   }),
+    // });
+    const response = await fetch('/api/transactions', {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         query,
         variables,
@@ -30,7 +32,7 @@ export const fetchGraphQL = async (query: string, variables = {}) => {
 
     if (!response.ok) {
       throw new Error(
-        `Network error: ${response.status} ${response.statusText}`,
+        `Network error: ${response?.status} ${response?.statusText}`,
       );
     }
 
@@ -50,7 +52,7 @@ export const fetchGraphQL = async (query: string, variables = {}) => {
   }
 };
 
-const LATEST_BLOCKS_QUERY = `
+export const LATEST_BLOCKS_QUERY = `
   query GetLatestBlocks {
     blocks(
       first: 15
