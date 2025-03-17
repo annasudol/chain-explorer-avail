@@ -41,7 +41,7 @@ export const fetchGraphQL = async (query: string, variables = {}) => {
   }
 };
 
-export const LATEST_BLOCKS_QUERY = `
+ const LATEST_BLOCKS_QUERY = `
   query GetLatestBlocks {
     blocks(
       first: 15
@@ -66,7 +66,7 @@ export const LATEST_BLOCKS_QUERY = `
   }
 `;
 
-export const LATEST_EXTRINSICS_QUERY = `
+ const LATEST_EXTRINSICS_QUERY = `
   query GetLatestExtrinsics {
     extrinsics(
       first: 10
@@ -96,7 +96,7 @@ export const LATEST_EXTRINSICS_QUERY = `
   }
 `;
 
-export const GET_BLOCK_BY_NUMBER = `
+ const GET_BLOCK_BY_NUMBER = `
   query GetBlockByNumber($blockNumber: Int!) {
    blocks(filter: {number: {equalTo: 1525914}}, first: 1) {
       nodes {
@@ -117,6 +117,19 @@ export const GET_BLOCK_BY_NUMBER = `
           }
         }
       }
+    }
+  }
+`;
+
+const CHAIN_STATS_QUERY = `
+  query GetBlockchainStats {
+    metadata: _metadata {
+      lastProcessedHeight
+      lastProcessedTimestamp
+      targetHeight
+      chain
+      specName
+      genesisHash
     }
   }
 `;
@@ -166,4 +179,36 @@ export const useGetLatestExtrinsic=()=>{
       },
       refetchInterval: INTERVAL, 
     });
+}
+
+
+export const useChainStats=()=>{
+  return useQuery({
+      queryKey: ['chainStats'],
+      queryFn: async () => {
+        try {
+          const result = await fetchGraphQL(CHAIN_STATS_QUERY);
+          return result;
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error('Error fetching chain stats:', err);
+          throw err;
+        }
+      },
+      refetchInterval: INTERVAL,
+    });
+
+}
+export function useBlockDetails(blockNumber: string) {
+  return useQuery({
+    queryKey: ["blockDetails", blockNumber],
+    queryFn: () => {
+      if (!blockNumber || Number.isNaN(Number(blockNumber))) {
+        throw new Error("Invalid block number");
+      }
+      return fetchGraphQL(GET_BLOCK_BY_NUMBER, { blockNumber: Number(blockNumber) });
+    },
+    staleTime: 60000, // 1 minute
+    enabled: !!blockNumber && !Number.isNaN(Number(blockNumber)),
+  });
 }

@@ -1,41 +1,15 @@
 "use client"
 
-import { useQuery } from '@tanstack/react-query';
-import { fetchGraphQL } from 'lib/graphql';
 import { Activity, Clock, Database, Hash, Layers, Users } from 'lucide-react';
+
+import { useChainStats } from '@/lib/graphql';
 
 import StatCard from './StatCard';
 
-const CHAIN_STATS_QUERY = `
-  query GetBlockchainStats {
-    metadata: _metadata {
-      lastProcessedHeight
-      lastProcessedTimestamp
-      targetHeight
-      chain
-      specName
-      genesisHash
-    }
-  }
-`;
+
 
 const ChainStats = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['chainStats'],
-    queryFn: async () => {
-      try {
-        const result = await fetchGraphQL(CHAIN_STATS_QUERY);
-        return result;
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error('Error fetching chain stats:', err);
-        throw err;
-      }
-    },
-    refetchInterval: 30000, // Refetch every 30 seconds
-  });
-
-
+  const { data, isLoading, error } = useChainStats();
   const metadata = data?.metadata;
 
   // Simulated stats since the actual API might not have all these

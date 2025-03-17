@@ -46,7 +46,7 @@ const SearchForm = ({ searchQuery, setSearchQuery, handleSearch }: SearchFormPro
 // Pagination Component
 type PaginationProps = {
   cursor?: string;
-  setCursor: (cursor: string | null) => void;
+  setCursor: (cursor?: string) => void;
   pageInfo?: PageInfoType | null;
 };
 
@@ -55,7 +55,7 @@ const Pagination = ({ cursor, setCursor, pageInfo }: PaginationProps) => (
     <Button 
       variant="outline" 
       size="sm"
-      onClick={() => setCursor(null)}
+      onClick={() => setCursor(undefined)}
       disabled={!cursor}
     >
       <ChevronLeft className="mr-1 size-4" /> First Page
@@ -79,7 +79,7 @@ const Pagination = ({ cursor, setCursor, pageInfo }: PaginationProps) => (
 type ContentProps = {
   blocks: any[];
   cursor?: string;
-  setCursor: (cursor: string | null) => void;
+  setCursor: (cursor?: string) => void;
   pageInfo?: PageInfoType | null;
 };
 

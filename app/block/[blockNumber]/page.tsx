@@ -3,40 +3,20 @@
 
 "use client"
 
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
-import { fetchGraphQL, GET_BLOCK_BY_NUMBER } from "@/lib/graphql";
+import { useBlockDetails } from "@/lib/graphql";
 
-// import { Placeholder } from "@/components/ui/placeholder";
-// import { 
-//   Table, 
-//   TableBody, 
-//   TableCaption, 
-//   TableCell, 
-//   TableHead, 
-//   TableHeader, 
-//   TableRow 
-// } from "@/components/ui/table";
+
 
 const BlockDetailPage = () => {
   const { blockNumber } = useParams<{ blockNumber: string }>();
   // const { data, isLoading, error } = useBlockDetails(blockNumber || "");
   // console.log(data, isLoading, error);
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["blockDetails", blockNumber],
-    queryFn: () => {
-      if (!blockNumber || Number.isNaN(Number(blockNumber))) {
-        throw new Error("Invalid block number");
-      }
-      return fetchGraphQL(GET_BLOCK_BY_NUMBER, { blockNumber: Number(blockNumber) });
-    },
-    staleTime: 60000, // 1 minute
-    enabled: !!blockNumber && !Number.isNaN(Number(blockNumber)),
-  });
+  const { data, isLoading, error } = useBlockDetails(blockNumber || "");
   useEffect(() => {
-    if (data?.data?.blocks[0]) {
+    if (data) {
       console.log(data);
     }
     if (isLoading) {
