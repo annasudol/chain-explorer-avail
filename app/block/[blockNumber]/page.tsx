@@ -4,10 +4,11 @@
 "use client"
 
 import { format } from "date-fns";
-import { CheckCircle2,Copy } from "lucide-react";
+import { CheckCircle2, Copy } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
+import BlockInfoGrid from "@/components/shared/BlockInfoGrid";
 import ErrorMessage from "@/components/shared/ErrorMessage";
 import LoadingSkeleton from "@/components/shared/LoadingSkeleton";
 import { Badge } from "@/components/ui/badge";
@@ -36,9 +37,6 @@ const BlockDetailPage = () => {
     }
   };
 
-
-
-
   const blockData = data?.blocks?.nodes?.[0];
   // Extract extrinsics from the nested structure
   const extrinsics = blockData?.extrinsics?.nodes || [];
@@ -52,7 +50,7 @@ const BlockDetailPage = () => {
         </p>
       </div>
       {error && <ErrorMessage message={error.message} />}
-      {isLoading ? (
+      {isLoading && (
         <div className="space-y-6">
           <Card>
             <CardHeader>
@@ -64,49 +62,17 @@ const BlockDetailPage = () => {
           </Card>
 
         </div>
-      ) : (
-        blockData && (
+      )}
+        {blockData && (
           <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Block Information</CardTitle>
-                <CardDescription>
-                  Details about block {blockData.number}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">Block Number</p>
-                    <p>{blockData.number}</p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">Timestamp</p>
-                    <p>{formatDate(blockData.timestamp)}</p>
-                  </div>
-
-                  <div className="space-y-2 md:col-span-2">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-muted-foreground">Block Hash</p>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="size-6"
-                        onClick={() => copyToClipboard(blockData.hash)}
-                      >
-                        {copiedHash === blockData.hash ? (
-                          <CheckCircle2 className="size-4 text-green-500" />
-                        ) : (
-                          <Copy className="size-4" />
-                        )}
-                      </Button>
-                    </div>
-                    <p className="break-all font-mono">{blockData.hash}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+           
+                <BlockInfoGrid
+                  blockNumber={blockData.number}
+                  timestamp={blockData.timestamp}
+                  hash={blockData.hash}
+                  formatDate={formatDate}
+                />
+           
 
             {extrinsics.length > 0 && (
               <Card>
@@ -187,8 +153,8 @@ const BlockDetailPage = () => {
               </Card>
             )}
           </div>
-        )
-      )}
+        )}
+      
     </div>
   );
 };
