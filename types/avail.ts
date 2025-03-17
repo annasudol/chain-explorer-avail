@@ -45,6 +45,7 @@ export interface Edge<T> {
 export interface Connection<T> {
   edges: Edge<T>[];
   pageInfo: PageInfo;
+  nodes?: T[];
 }
 
 export interface BlocksResponse {
