@@ -96,29 +96,24 @@ export const LATEST_EXTRINSICS_QUERY = `
 
 export const GET_BLOCK_BY_NUMBER = `
   query GetBlockByNumber($blockNumber: Int!) {
-    block(blockNumber: $blockNumber) {
-      id
-      blockNumber
-      hash
-      timestamp
-      extrinsicCount
-      transactionCount
-      dataTransactionCount
-      totalDataSize
-      producedBy
-      extrinsics {
+   blocks(filter: {number: {equalTo: 1525914}}, first: 1) {
+      nodes {
         id
-        module
-        timestamp
-        txHash
-        argsName
-        argsValue
-        extrinsicIndex
+        number
         hash
-        success
-        signature
-        signer
-        feesRounded
+        timestamp
+        extrinsics {
+          nodes {
+            id
+            module
+            timestamp
+            hash
+            extrinsicIndex
+            signer
+            success
+            feesRounded
+          }
+        }
       }
     }
   }

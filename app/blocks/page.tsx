@@ -10,7 +10,8 @@ const BlocksPage = () => {
           Browse and search for blocks on the Avail network
         </p>
   </div>
-  <Blocks /></div>);
+  <Blocks />
+  </div>);
 };
 
 export default BlocksPage;
