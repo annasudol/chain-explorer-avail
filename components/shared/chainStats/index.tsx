@@ -1,12 +1,10 @@
-"use client"
+"use client";
 
-import { Activity, Clock, Database, Hash, Layers, Users } from 'lucide-react';
+import { Activity, Clock, Database, Hash, Layers, Users } from "lucide-react";
 
-import { useChainStats } from '@/lib/graphql';
+import { useChainStats } from "@/lib/graphql";
 
-import StatCard from './StatCard';
-
-
+import StatCard from "./StatCard";
 
 const ChainStats = () => {
   const { data, isLoading, error } = useChainStats();
@@ -34,7 +32,7 @@ const ChainStats = () => {
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       <StatCard
         title="Latest Block"
-        value={metadata?.lastProcessedHeight?.toLocaleString() || '-'}
+        value={metadata?.lastProcessedHeight?.toLocaleString() || "-"}
         icon={<Layers className="size-4 text-avail-blue" />}
         isLoading={isLoading}
       />
@@ -52,7 +50,7 @@ const ChainStats = () => {
       />
       <StatCard
         title="Total Transactions"
-        value={simulatedStats.totalTransactions.toLocaleString() || '-'}
+        value={simulatedStats.totalTransactions.toLocaleString() || "-"}
         icon={<Hash className="size-4 text-avail-cyan" />}
         isLoading={isLoading}
       />
@@ -61,14 +59,14 @@ const ChainStats = () => {
         value={
           metadata?.genesisHash
             ? `${metadata.genesisHash.slice(0, 10)}...`
-            : '-'
+            : "-"
         }
         icon={<Database className="size-4 text-avail-blue" />}
         isLoading={isLoading}
       />
       <StatCard
         title="Total Accounts"
-        value={simulatedStats.totalAccounts.toLocaleString() || '-'}
+        value={simulatedStats.totalAccounts.toLocaleString() || "-"}
         icon={<Users className="size-4 text-avail-purple" />}
         isLoading={isLoading}
       />

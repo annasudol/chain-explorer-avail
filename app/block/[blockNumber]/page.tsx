@@ -1,7 +1,4 @@
-
-
-
-"use client"
+"use client";
 
 import { format } from "date-fns";
 import { useParams } from "next/navigation";
@@ -10,7 +7,13 @@ import BlockInfoGrid from "@/components/shared/BlockInfoGrid";
 import ErrorMessage from "@/components/shared/ErrorMessage";
 import ExtrinsicsTable from "@/components/shared/ExtrinsicsTable";
 import LoadingSkeleton from "@/components/shared/LoadingSkeleton";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useBlockDetails } from "@/lib/graphql";
 
 const BlockDetailPage = () => {
@@ -48,36 +51,36 @@ const BlockDetailPage = () => {
               <LoadingSkeleton count={24} />
             </CardContent>
           </Card>
-
         </div>
       )}
+      <div className="space-y-6">
         {blockData && (
-          <div className="space-y-6">
-           
-                <BlockInfoGrid
-                  blockNumber={blockData.number}
-                  timestamp={blockData.timestamp}
-                  hash={blockData.hash}
-                  formatDate={formatDate}
-                />
-           
-
-            {extrinsics.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Extrinsics</CardTitle>
-                  <CardDescription>
-                    {extrinsics.length} extrinsic{extrinsics.length !== 1 ? "s" : ""} in this block
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ExtrinsicsTable extrinsics={extrinsics} formatDate={formatDate} />
-                </CardContent>
-              </Card>
-            )}
-          </div>
+          <BlockInfoGrid
+            blockNumber={blockData.number}
+            timestamp={blockData.timestamp}
+            hash={blockData.hash}
+            formatDate={formatDate}
+          />
         )}
-      
+
+        {extrinsics.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Extrinsics</CardTitle>
+              <CardDescription>
+                {extrinsics.length} extrinsic
+                {extrinsics.length !== 1 ? "s" : ""} in this block
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ExtrinsicsTable
+                extrinsics={extrinsics}
+                formatDate={formatDate}
+              />
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </div>
   );
 };

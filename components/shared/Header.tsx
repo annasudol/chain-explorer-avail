@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { Button } from 'components/ui/button';
-import { Activity, Blocks, Home, Wallet } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useChainStore } from 'store/useChainStore';
+import { Button } from "components/ui/button";
+import { Activity, Blocks, Home, Wallet } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useChainStore } from "store/useChainStore";
 
 const Header = () => {
   const pathname = usePathname();
@@ -15,7 +15,7 @@ const Header = () => {
   };
 
   const formatAddress = (address: string | null) => {
-    if (!address) return '';
+    if (!address) return "";
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
@@ -34,9 +34,9 @@ const Header = () => {
             <Link
               href="/"
               className={`flex items-center gap-1 text-sm font-medium ${
-                isActive('/')
-                  ? 'text-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
+                isActive("/")
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <Home className="size-4" />
@@ -45,9 +45,9 @@ const Header = () => {
             <Link
               href="/blocks"
               className={`flex items-center gap-1 text-sm font-medium ${
-                isActive('/blocks')
-                  ? 'text-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
+                isActive("/blocks")
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <Blocks className="size-4" />
@@ -56,9 +56,9 @@ const Header = () => {
             <Link
               href="/actions"
               className={`flex items-center gap-1 text-sm font-medium ${
-                isActive('/actions')
-                  ? 'text-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
+                isActive("/actions")
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <Activity className="size-4" />

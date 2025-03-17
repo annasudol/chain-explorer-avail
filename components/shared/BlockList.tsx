@@ -1,23 +1,21 @@
-'use client'
+"use client";
 
-import { Button } from 'components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import { useGetLatestBlock } from 'lib/graphql';
-import { ChevronsRight } from 'lucide-react';
-import Link from 'next/link';
+import { Button } from "components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
+import { useGetLatestBlock } from "lib/graphql";
+import { ChevronsRight } from "lucide-react";
+import Link from "next/link";
 
-import BlockTable from './BlockTable';
-import ErrorMessage from './ErrorMessage';
-import LoadingSkeleton from './LoadingSkeleton';
+import BlockTable from "./BlockTable";
+import ErrorMessage from "./ErrorMessage";
+import LoadingSkeleton from "./LoadingSkeleton";
 
 const BlockList = ({ limit = 5 }: { limit?: number }) => {
   const { data, isLoading, error } = useGetLatestBlock(limit);
   const blocks = data?.blocks?.edges.map((edge) => edge.node) || [];
 
   if (error) {
-    return (
-      <ErrorMessage message={(error as Error).message} />
-    );
+    return <ErrorMessage message={(error as Error).message} />;
   }
 
   return (

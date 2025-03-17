@@ -20,7 +20,7 @@ module.exports = withBundleAnalyzer({
     styledComponents: true,
     // Configure styled-jsx to use PostCSS
     emotion: false,
-  }
+  },
 });
 
 // crossOrigin: 'anonymous',

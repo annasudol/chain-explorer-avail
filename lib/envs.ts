@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { createEnv } from '@t3-oss/env-nextjs';
-import { STRING_NOT_EMPTY } from 'lib/zod';
+import { createEnv } from "@t3-oss/env-nextjs";
+import { STRING_NOT_EMPTY } from "lib/zod";
 
 export const envs = createEnv({
   client: {

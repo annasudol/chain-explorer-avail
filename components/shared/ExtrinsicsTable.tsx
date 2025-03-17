@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { CheckCircle2, Copy } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import truncateHash from "@/lib/truncateHash";
 
 export type Extrinsic = {
@@ -61,7 +61,9 @@ const ExtrinsicsTable = ({ extrinsics, formatDate }: ExtrinsicsTableProps) => {
               <TableCell>{extrinsic.module}</TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono">{truncateHash(extrinsic.hash)}</span>
+                  <span className="font-mono">
+                    {truncateHash(extrinsic.hash)}
+                  </span>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -80,7 +82,9 @@ const ExtrinsicsTable = ({ extrinsics, formatDate }: ExtrinsicsTableProps) => {
               <TableCell>
                 {extrinsic.signer ? (
                   <div className="flex items-center gap-2">
-                    <span className="font-mono">{truncateHash(extrinsic.signer || "", 6)}</span>
+                    <span className="font-mono">
+                      {truncateHash(extrinsic.signer || "", 6)}
+                    </span>
                     <Button
                       variant="ghost"
                       size="icon"

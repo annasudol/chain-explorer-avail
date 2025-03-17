@@ -2,7 +2,13 @@ import { CheckCircle2, Copy } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface BlockInfoGridProps {
   blockNumber: string | number;
@@ -29,25 +35,29 @@ const BlockInfoGrid = ({
     <Card>
       <CardHeader>
         <CardTitle>Block Information</CardTitle>
-        <CardDescription>
-          Details about block {blockNumber}
-        </CardDescription>
+        <CardDescription>Details about block {blockNumber}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-2">
-            <p className="text-sm font-medium text-muted-foreground">Block Number</p>
+            <p className="text-sm font-medium text-muted-foreground">
+              Block Number
+            </p>
             <p>{blockNumber}</p>
           </div>
 
           <div className="space-y-2">
-            <p className="text-sm font-medium text-muted-foreground">Timestamp</p>
+            <p className="text-sm font-medium text-muted-foreground">
+              Timestamp
+            </p>
             <p>{formatDate(timestamp)}</p>
           </div>
 
           <div className="space-y-2 md:col-span-2">
             <div className="flex items-center gap-2">
-              <p className="text-sm font-medium text-muted-foreground">Block Hash</p>
+              <p className="text-sm font-medium text-muted-foreground">
+                Block Hash
+              </p>
               <Button
                 variant="ghost"
                 size="icon"

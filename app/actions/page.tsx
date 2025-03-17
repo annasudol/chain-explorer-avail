@@ -1,10 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import ConnectWallet from '@/components/shared/ConnectWallet';
+import ConnectWallet from "@/components/shared/ConnectWallet";
 
 const ActionsPage = () => {
-
-
   return (
     <div className="container space-y-8 py-10">
       <div>
@@ -14,7 +12,7 @@ const ActionsPage = () => {
         </p>
       </div>
 
-     <ConnectWallet />
+      <ConnectWallet />
     </div>
   );
 };

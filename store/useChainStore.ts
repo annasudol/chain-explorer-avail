@@ -1,7 +1,7 @@
-import type { WalletAccount } from '@talismn/connect-wallets';
-import { create } from 'zustand';
+import type { WalletAccount } from "@talismn/connect-wallets";
+import { create } from "zustand";
 
-import type { Block, ChainStats, Extrinsic } from '../types/avail';
+import type { Block, ChainStats, Extrinsic } from "../types/avail";
 
 interface ChainState {
   blocks: Block[];

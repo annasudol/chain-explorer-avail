@@ -1,15 +1,17 @@
-
-import BlockList from '@/components/shared/BlockList';
-import ChainStats from '@/components/shared/chainStats';
-import LatestTransactionsStats from '@/components/shared/LatestTransactionsStats';
+import BlockList from "@/components/shared/BlockList";
+import ChainStats from "@/components/shared/chainStats";
+import LatestTransactionsStats from "@/components/shared/LatestTransactionsStats";
 
 const MainPage = () => {
   return (
     <div className="container space-y-8 py-10">
       <div>
-        <h1 className="mb-2 text-3xl font-bold tracking-tight">Avail Blockchain Explorer</h1>
+        <h1 className="mb-2 text-3xl font-bold tracking-tight">
+          Avail Blockchain Explorer
+        </h1>
         <p className="text-muted-foreground">
-          Explore the latest blocks, transactions, and statistics on the Avail network
+          Explore the latest blocks, transactions, and statistics on the Avail
+          network
         </p>
       </div>
       <ChainStats />

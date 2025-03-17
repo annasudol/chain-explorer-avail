@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { formatDistanceToNow } from 'date-fns';
-import Link from 'next/link';
+import { formatDistanceToNow } from "date-fns";
+import Link from "next/link";
 
 import {
   Table,
@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 
 export type Block = {
   id: string;
@@ -22,15 +22,21 @@ export type Block = {
   stateRoot?: string;
 };
 
-export type BlockTableVariant = 'default' | 'detailed';
+export type BlockTableVariant = "default" | "detailed";
 
 export type BlockTableProps = {
   blocks: Block[];
   variant?: BlockTableVariant;
 };
 
-const BlockRow = ({ block, variant = 'default' }: { block: Block; variant?: BlockTableVariant }) => {
-  if (variant === 'detailed') {
+const BlockRow = ({
+  block,
+  variant = "default",
+}: {
+  block: Block;
+  variant?: BlockTableVariant;
+}) => {
+  if (variant === "detailed") {
     return (
       <TableRow>
         <TableCell className="font-medium">
@@ -45,7 +51,9 @@ const BlockRow = ({ block, variant = 'default' }: { block: Block; variant?: Bloc
         </TableCell>
         <TableCell>
           <span className="font-mono text-xs">
-            {block.parentHash ? `${block.parentHash.slice(0, 10)}...${block.parentHash.slice(-4)}` : 'N/A'}
+            {block.parentHash
+              ? `${block.parentHash.slice(0, 10)}...${block.parentHash.slice(-4)}`
+              : "N/A"}
           </span>
         </TableCell>
         <TableCell>
@@ -54,7 +62,7 @@ const BlockRow = ({ block, variant = 'default' }: { block: Block; variant?: Bloc
           })}
         </TableCell>
         <TableCell className="font-mono text-xs">
-          {block.stateRoot ? `${block.stateRoot.slice(0, 8)}...` : 'N/A'}
+          {block.stateRoot ? `${block.stateRoot.slice(0, 8)}...` : "N/A"}
         </TableCell>
       </TableRow>
     );
@@ -78,14 +86,16 @@ const BlockRow = ({ block, variant = 'default' }: { block: Block; variant?: Bloc
         })}
       </TableCell>
       <TableCell className="text-right font-mono text-xs">
-        {block.extrinsicsRoot ? `${block.extrinsicsRoot.slice(0, 8)}...` : 'N/A'}
+        {block.extrinsicsRoot
+          ? `${block.extrinsicsRoot.slice(0, 8)}...`
+          : "N/A"}
       </TableCell>
     </TableRow>
   );
 };
 
-const BlockTable = ({ blocks, variant = 'default' }: BlockTableProps) => {
-  const isDetailed = variant === 'detailed';
+const BlockTable = ({ blocks, variant = "default" }: BlockTableProps) => {
+  const isDetailed = variant === "detailed";
   const colSpan = isDetailed ? 5 : 4;
 
   return (
@@ -96,14 +106,16 @@ const BlockTable = ({ blocks, variant = 'default' }: BlockTableProps) => {
           <TableHead>Hash</TableHead>
           {isDetailed && <TableHead>Parent Hash</TableHead>}
           <TableHead>Time</TableHead>
-          <TableHead className={isDetailed ? '' : 'text-right'}>
-            {isDetailed ? 'State Root' : 'Extrinsics Root'}
+          <TableHead className={isDetailed ? "" : "text-right"}>
+            {isDetailed ? "State Root" : "Extrinsics Root"}
           </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {blocks.length > 0 ? (
-          blocks.map((block) => <BlockRow key={block.id} block={block} variant={variant} />)
+          blocks.map((block) => (
+            <BlockRow key={block.id} block={block} variant={variant} />
+          ))
         ) : (
           <TableRow>
             <TableCell colSpan={colSpan} className="h-24 text-center">

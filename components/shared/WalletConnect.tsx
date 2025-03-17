@@ -1,7 +1,7 @@
-import type { Wallet as TalismanWallet } from '@talismn/connect-wallets';
-import { getWallets } from '@talismn/connect-wallets';
-import { Alert, AlertDescription, AlertTitle } from 'components/ui/alert';
-import { Button } from 'components/ui/button';
+import type { Wallet as TalismanWallet } from "@talismn/connect-wallets";
+import { getWallets } from "@talismn/connect-wallets";
+import { Alert, AlertDescription, AlertTitle } from "components/ui/alert";
+import { Button } from "components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,11 +9,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from 'components/ui/card';
-import { useToast } from 'hooks/use-toast';
-import { AlertCircle, ChevronRight, LogOut, Wallet } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useChainStore } from 'store/useChainStore';
+} from "components/ui/card";
+import { useToast } from "hooks/use-toast";
+import { AlertCircle, ChevronRight, LogOut, Wallet } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useChainStore } from "store/useChainStore";
 
 const WalletConnect = () => {
   const { walletConnected, walletAddress, walletName, setWalletConnected } =
@@ -31,11 +31,11 @@ const WalletConnect = () => {
         const wallets = getWallets();
         setAvailableWallets(wallets);
       } catch (error) {
-        console.error('Failed to get wallets:', error);
+        console.error("Failed to get wallets:", error);
         toast({
-          title: 'Error Loading Wallets',
-          description: 'Failed to load wallet extensions',
-          variant: 'destructive',
+          title: "Error Loading Wallets",
+          description: "Failed to load wallet extensions",
+          variant: "destructive",
         });
       }
     };
@@ -49,9 +49,9 @@ const WalletConnect = () => {
     try {
       // Check if the wallet is installed/available
       if (!wallet.installed) {
-        window.open(wallet.installUrl, '_blank');
+        window.open(wallet.installUrl, "_blank");
         toast({
-          title: 'Wallet Not Installed',
+          title: "Wallet Not Installed",
           description: `Please install ${wallet.title} to continue`,
         });
         setIsLoading(false);
@@ -59,7 +59,7 @@ const WalletConnect = () => {
       }
 
       // Enable the wallet with dApp name
-      await wallet.enable('AvailBlocks');
+      await wallet.enable("AvailBlocks");
 
       // Get accounts
       const accounts = await wallet.getAccounts();
@@ -70,25 +70,25 @@ const WalletConnect = () => {
         setWalletConnected(true, wallet.title, account);
 
         toast({
-          title: 'Wallet Connected',
+          title: "Wallet Connected",
           description: `Successfully connected to ${wallet.title}`,
         });
       } else {
         toast({
-          title: 'No Accounts Found',
+          title: "No Accounts Found",
           description:
-            'No accounts found in the wallet. Please create an account first.',
-          variant: 'destructive',
+            "No accounts found in the wallet. Please create an account first.",
+          variant: "destructive",
         });
       }
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error('Wallet connection error:', error);
+      console.error("Wallet connection error:", error);
       toast({
-        title: 'Connection Failed',
+        title: "Connection Failed",
         description:
-          error instanceof Error ? error.message : 'Failed to connect wallet',
-        variant: 'destructive',
+          error instanceof Error ? error.message : "Failed to connect wallet",
+        variant: "destructive",
       });
     } finally {
       setIsLoading(false);
@@ -98,8 +98,8 @@ const WalletConnect = () => {
   const handleDisconnect = () => {
     setWalletConnected(false);
     toast({
-      title: 'Wallet Disconnected',
-      description: 'Your wallet has been disconnected.',
+      title: "Wallet Disconnected",
+      description: "Your wallet has been disconnected.",
     });
   };
 

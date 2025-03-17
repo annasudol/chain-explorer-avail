@@ -1,6 +1,5 @@
 import Blocks from "@/components/shared/Blocks";
 
-
 const BlocksPage = () => {
   return (
     <div className="container space-y-6 py-10">
@@ -9,9 +8,10 @@ const BlocksPage = () => {
         <p className="text-muted-foreground">
           Browse and search for blocks on the Avail network
         </p>
-  </div>
-  <Blocks />
-  </div>);
+      </div>
+      <Blocks />
+    </div>
+  );
 };
 
 export default BlocksPage;

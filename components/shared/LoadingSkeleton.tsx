@@ -8,8 +8,7 @@ const LoadingSkeleton = ({ count = 10 }: { count?: number }) => (
         <div key={i} className="py-2">
           <Skeleton className="h-12 w-full" />
         </div>
-      ))
-    }
+      ))}
   </>
 );
 export default LoadingSkeleton;

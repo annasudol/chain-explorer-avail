@@ -1,17 +1,23 @@
-'use client'
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'components/ui/card';
-import { formatDistanceToNow } from 'date-fns';
-import { useGetLatestExtrinsic } from 'lib/graphql';
-import { Check, X } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "components/ui/card";
+import { formatDistanceToNow } from "date-fns";
+import { useGetLatestExtrinsic } from "lib/graphql";
+import { Check, X } from "lucide-react";
 
-import ErrorMessage from '@/components/shared/ErrorMessage';
+import ErrorMessage from "@/components/shared/ErrorMessage";
 
-import LoadingSkeleton from './LoadingSkeleton';
+import LoadingSkeleton from "./LoadingSkeleton";
 
 const LatestTransactionsStats = () => {
   const { data, isLoading, error } = useGetLatestExtrinsic();
-  const extrinsics = data?.extrinsics?.edges.map(edge => edge.node) || [];
+  const extrinsics = data?.extrinsics?.edges.map((edge) => edge.node) || [];
 
   return (
     <Card>
@@ -26,9 +32,7 @@ const LatestTransactionsStats = () => {
         {isLoading && <LoadingSkeleton count={5} />}
 
         {/* Error state */}
-        { error && (
-          <ErrorMessage message={(error as Error).message} />
-        )}
+        {error && <ErrorMessage message={(error as Error).message} />}
 
         {/* Data loaded successfully */}
         {!isLoading && !error && (
@@ -39,11 +43,11 @@ const LatestTransactionsStats = () => {
                 className="flex items-center justify-between border-b pb-3"
               >
                 <div>
-                  <div className="font-medium">
-                    {extrinsic.module}
-                  </div>
+                  <div className="font-medium">{extrinsic.module}</div>
                   <div className="text-sm text-muted-foreground">
-                    {formatDistanceToNow(new Date(extrinsic.timestamp), { addSuffix: true })}
+                    {formatDistanceToNow(new Date(extrinsic.timestamp), {
+                      addSuffix: true,
+                    })}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
