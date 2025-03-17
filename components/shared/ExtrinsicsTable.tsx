@@ -14,17 +14,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import truncateString from "@/lib/truncateString";
+import type { Extrinsic } from "@/types/avail";
 
-export type Extrinsic = {
-  id: string;
-  extrinsicIndex: number;
-  module: string;
-  hash: string;
-  timestamp: string;
-  signer?: string;
-  success: boolean;
-  feesRounded?: number;
-};
+
 
 export type ExtrinsicsTableProps = {
   extrinsics: Extrinsic[];

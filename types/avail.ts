@@ -12,7 +12,7 @@ export interface Block {
   number: number; // Block number
   hash: string;
   timestamp: string;
-  extrinsics: Extrinsic[];
+  extrinsics: Connection<Extrinsic>; // Updated to match GraphQL response structure
   parentHash: string;
   stateRoot: string;
   extrinsicsRoot: string;
