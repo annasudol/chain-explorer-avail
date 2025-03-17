@@ -13,6 +13,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
   DialogTrigger,
 } from "components/ui/dialog";
 import { useToast } from "hooks/use-toast";
@@ -20,6 +21,7 @@ import { AlertCircle, ChevronRight, LogOut, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useChainStore } from "store/useChainStore";
 import truncateString from "@/lib/truncateString";
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 
 interface WalletConnectProps {
   triggerButton?: React.ReactNode;
@@ -133,17 +135,17 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <Card className="mx-auto w-full max-w-md border-none shadow-none">
-          <CardHeader className="px-0 pt-0">
-            <CardTitle className="flex items-center gap-2">
+      <DialogContent className="sm:max-w-md overflow-auto min-h-[600px]">
+        <div className="mx-auto w-full max-w-md border-none shadow-none">
+          <DialogHeader className="px-0 pt-0">
+            <DialogTitle className="flex items-center gap-2">
               <Wallet className="size-5 text-avail-purple" />
               Wallet Connection
-            </CardTitle>
-            <CardDescription>
+            </DialogTitle>
+            <DialogDescription>
               Connect your wallet to perform actions on the Avail network
-            </CardDescription>
-          </CardHeader>
+            </DialogDescription>
+          </DialogHeader>
           <CardContent className="px-0">
             {!walletConnected ? (
               <div className="space-y-4">
@@ -216,7 +218,7 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
               </Button>
             )}
           </CardFooter>
-        </Card>
+        </div>
       </DialogContent>
     </Dialog>
   );
