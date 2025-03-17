@@ -3,8 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import type { BlocksResponse, ExtrinsicsResponse } from "@/types/avail";
-
-const AVAIL_INDEXER_URL = "https://turing-indexer.avail.so";
+import { envs } from "./envs";
 
 /**
  * Executes a GraphQL query against the Avail API.
@@ -17,7 +16,7 @@ const AVAIL_INDEXER_URL = "https://turing-indexer.avail.so";
 
 export const fetchGraphQL = async (query: string, variables = {}) => {
   try {
-    const response = await fetch(AVAIL_INDEXER_URL, {
+    const response = await fetch(envs.NEXT_PUBLIC_INDEXER_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
