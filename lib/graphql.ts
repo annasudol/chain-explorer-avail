@@ -67,10 +67,6 @@ export const fetchGraphQL = async (query: string, variables = {}) => {
           extrinsicsRoot
         }
       }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
     }
   }
 `;
