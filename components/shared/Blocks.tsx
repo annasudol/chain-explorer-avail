@@ -87,7 +87,7 @@ const Blocks = () => {
         <ErrorMessage message="Failed to load blocks. Please try again later." />
       );
     }
-
+    
     return (
       <Content
         blocks={filteredBlocks}

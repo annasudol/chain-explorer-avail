@@ -67,6 +67,10 @@ const LATEST_BLOCKS_QUERY = `
           extrinsicsRoot
         }
       }
+    pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 `;
