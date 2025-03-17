@@ -3,7 +3,6 @@
 import { CheckCircle2, Copy } from "lucide-react";
 import { useState } from "react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/table";
 import truncateString from "@/lib/truncateString";
 import type { Extrinsic } from "@/types/avail";
-
+import BadgeInfo from "components/shared/BadgeInfo";
 export type ExtrinsicsTableProps = {
   extrinsics: Extrinsic[];
   formatDate: (dateString: string) => string;
@@ -93,9 +92,7 @@ const ExtrinsicsTable = ({ extrinsics, formatDate }: ExtrinsicsTableProps) => {
                 )}
               </TableCell>
               <TableCell>
-                <Badge variant={extrinsic.success ? "default" : "destructive"}>
-                  {extrinsic.success ? "Success" : "Failed"}
-                </Badge>
+                <BadgeInfo success={extrinsic.success} />
               </TableCell>
               <TableCell>{extrinsic.feesRounded || 0}</TableCell>
             </TableRow>

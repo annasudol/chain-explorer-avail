@@ -13,7 +13,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer"
+} from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 
 interface NavItem {
@@ -31,18 +31,18 @@ const Header = () => {
     // or exact match for home/root routes
     return path === "/" ? pathname === "/" : pathname.startsWith(path);
   };
-  
+
   const navItems: NavItem[] = [
     {
       path: "/",
       label: "Dashboard",
-      icon: Home
+      icon: Home,
     },
     {
       path: "/blocks",
       label: "Blocks",
-      icon: Blocks
-    }
+      icon: Blocks,
+    },
   ];
 
   return (
@@ -80,39 +80,45 @@ const Header = () => {
         <div className="flex items-center gap-2">
           <WalletConnect />
           <Drawer direction="right">
-        <DrawerTrigger><Button size="sm" className="sm:hidden w-10" asChild><AlignJustify className="size-3" /></Button></DrawerTrigger>
-        <DrawerContent >
-          <DrawerHeader>
-            <DrawerTitle>Navigation</DrawerTitle>
-            <DrawerDescription>Choose a page to navigate to</DrawerDescription>
-          </DrawerHeader>
-          <nav className="items-center gap-6 flex flex-col mt-4">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <DrawerClose key={item.path} asChild>
-                  <Link
-                    href={item.path}
-                    className={`flex items-center gap-1 text-sm font-medium ${
-                      isActive(item.path)
-                        ? "text-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    <Icon className="size-4" />
-                    {item.label}
-                  </Link>
+            <DrawerTrigger>
+              <Button size="sm" className="sm:hidden w-10" asChild>
+                <AlignJustify className="size-3" />
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle>Navigation</DrawerTitle>
+                <DrawerDescription>
+                  Choose a page to navigate to
+                </DrawerDescription>
+              </DrawerHeader>
+              <nav className="items-center gap-6 flex flex-col mt-4">
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <DrawerClose key={item.path} asChild>
+                      <Link
+                        href={item.path}
+                        className={`flex items-center gap-1 text-sm font-medium ${
+                          isActive(item.path)
+                            ? "text-foreground"
+                            : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        <Icon className="size-4" />
+                        {item.label}
+                      </Link>
+                    </DrawerClose>
+                  );
+                })}
+              </nav>
+              <DrawerFooter>
+                <DrawerClose asChild>
+                  <Button variant="outline">Cancel</Button>
                 </DrawerClose>
-              );
-            })}
-          </nav>
-          <DrawerFooter>
-            <DrawerClose>
-              <Button variant="outline">Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
         </div>
       </div>
     </header>

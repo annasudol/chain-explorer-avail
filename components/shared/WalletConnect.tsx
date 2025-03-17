@@ -2,26 +2,19 @@ import type { Wallet as TalismanWallet } from "@talismn/connect-wallets";
 import { getWallets } from "@talismn/connect-wallets";
 import { Alert, AlertDescription, AlertTitle } from "components/ui/alert";
 import { Button } from "components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "components/ui/card";
+import { CardContent, CardFooter } from "components/ui/card";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTrigger,
 } from "components/ui/dialog";
-import { useToast } from "hooks/use-toast";
 import { AlertCircle, ChevronRight, LogOut, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useChainStore } from "store/useChainStore";
 import truncateString from "@/lib/truncateString";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
+import { toast } from "sonner";
 
 interface WalletConnectProps {
   triggerButton?: React.ReactNode;
@@ -35,7 +28,6 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
     [],
   );
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
 
   // Get available wallets on mount
   useEffect(() => {
@@ -45,11 +37,6 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
         setAvailableWallets(wallets);
       } catch (error) {
         console.error("Failed to get wallets:", error);
-        toast({
-          title: "Error Loading Wallets",
-          description: "Failed to load wallet extensions",
-          variant: "destructive",
-        });
       }
     };
 
@@ -63,10 +50,6 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
       // Check if the wallet is installed/available
       if (!wallet.installed) {
         window.open(wallet.installUrl, "_blank");
-        toast({
-          title: "Wallet Not Installed",
-          description: `Please install ${wallet.title} to continue`,
-        });
         setIsLoading(false);
         return;
       }
@@ -81,28 +64,11 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
         // Use first account for simplicity
         const account = accounts[0];
         setWalletConnected(true, wallet.title, account);
-
-        toast({
-          title: "Wallet Connected",
-          description: `Successfully connected to ${wallet.title}`,
-        });
       } else {
-        toast({
-          title: "No Accounts Found",
-          description:
-            "No accounts found in the wallet. Please create an account first.",
-          variant: "destructive",
-        });
       }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Wallet connection error:", error);
-      toast({
-        title: "Connection Failed",
-        description:
-          error instanceof Error ? error.message : "Failed to connect wallet",
-        variant: "destructive",
-      });
     } finally {
       setIsLoading(false);
     }
@@ -110,10 +76,6 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
 
   const handleDisconnect = () => {
     setWalletConnected(false);
-    toast({
-      title: "Wallet Disconnected",
-      description: "Your wallet has been disconnected.",
-    });
     setDialogOpen(false);
   };
 
@@ -126,10 +88,14 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
           <Button
             variant={walletConnected ? "outline" : "default"}
             size="sm"
-            className={walletConnected ? "flex items-center gap-1.5 text-xs" : "bg-avail-purple hover:bg-avail-indigo"}
+            className={
+              walletConnected
+                ? "flex items-center gap-1.5 text-xs"
+                : "bg-avail-purple hover:bg-avail-indigo"
+            }
           >
             <Wallet className="size-3.5" />
-            {walletConnected 
+            {walletConnected
               ? walletAddress && truncateString(walletAddress, 5)
               : "Connect Wallet"}
           </Button>
@@ -154,8 +120,8 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
                     <AlertCircle className="size-4" />
                     <AlertTitle>No Wallets Found</AlertTitle>
                     <AlertDescription>
-                      Please install a Substrate-compatible wallet extension like
-                      Talisman or Polkadot.js
+                      Please install a Substrate-compatible wallet extension
+                      like Talisman or Polkadot.js
                     </AlertDescription>
                   </Alert>
                 ) : (
@@ -197,7 +163,9 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
                       Connected with {walletName}
                     </div>
                   </div>
-                  <div className="break-all font-mono text-sm">{walletAddress}</div>
+                  <div className="break-all font-mono text-sm">
+                    {walletAddress}
+                  </div>
                 </div>
               </div>
             )}

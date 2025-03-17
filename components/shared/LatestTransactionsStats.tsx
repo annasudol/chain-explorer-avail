@@ -9,8 +9,7 @@ import {
 } from "components/ui/card";
 import { formatDistanceToNow } from "date-fns";
 import { useGetLatestExtrinsic } from "lib/graphql";
-import { Check, X } from "lucide-react";
-
+import BadgeInfo from "components/shared/BadgeInfo";
 import ErrorMessage from "@/components/shared/ErrorMessage";
 
 import LoadingSkeleton from "./LoadingSkeleton";
@@ -50,17 +49,7 @@ const LatestTransactionsStats = () => {
                     })}
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  {extrinsic.success ? (
-                    <span className="inline-flex items-center text-xs font-medium text-green-600">
-                      <Check className="mr-1 size-3" /> Success
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center text-xs font-medium text-red-600">
-                      <X className="mr-1 size-3" /> Failed
-                    </span>
-                  )}
-                </div>
+                <BadgeInfo success={extrinsic.success} />
               </div>
             ))}
             {extrinsics.length === 0 && (
