@@ -160,6 +160,7 @@ type ContentProps = {
 
 const Content = ({ blocks, cursor, setCursor, pageInfo }: ContentProps) => (
   <>
+  {pageInfo?.hasNextPage}
     <BlocksTable blocks={blocks} />
     <Pagination cursor={cursor} setCursor={setCursor} pageInfo={pageInfo} />
   </>
@@ -190,6 +191,7 @@ const Blocks = () => {
 
   const blocks = data?.blocks?.edges.map(edge => edge.node) || [];
   const pageInfo = data?.blocks?.pageInfo;
+  console.log(data);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

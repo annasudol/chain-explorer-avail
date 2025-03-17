@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Button } from 'components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import { Skeleton } from 'components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -17,6 +16,9 @@ import { fetchGraphQL, LATEST_BLOCKS_QUERY } from 'lib/graphql';
 import { ChevronsRight } from 'lucide-react';
 import Link from 'next/link';
 import type { BlocksResponse } from 'types/avail';
+
+import ErrorMessage from './ErrorMessage';
+import LoadingSkeleton from './LoadingSkeleton';
 
 const BlockList = ({ limit = 5 }: { limit?: number }) => {
   const { data, isLoading, error } = useQuery({
@@ -35,9 +37,7 @@ const BlockList = ({ limit = 5 }: { limit?: number }) => {
 
   if (error) {
     return (
-      <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
-        <p>Failed to load blocks. Please try again later.</p>
-      </div>
+      <ErrorMessage message={(error as Error).message} />
     );
   }
 
@@ -53,13 +53,7 @@ const BlockList = ({ limit = 5 }: { limit?: number }) => {
       </CardHeader>
       <CardContent>
         {isLoading ? (
-          Array(limit)
-            .fill(0)
-            .map((_, i) => (
-              <div key={i} className="py-2">
-                <Skeleton className="h-12 w-full" />
-              </div>
-            ))
+          <LoadingSkeleton count={limit} />
         ) : (
           <Table>
             <TableHeader>

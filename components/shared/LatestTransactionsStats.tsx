@@ -3,11 +3,12 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'components/ui/card';
-import { Skeleton } from 'components/ui/skeleton';
 import { formatDistanceToNow } from 'date-fns';
 import { fetchGraphQL, LATEST_EXTRINSICS_QUERY } from 'lib/graphql';
 import { Check, X } from 'lucide-react';
 import type { ExtrinsicsResponse } from 'types/avail';
+
+import LoadingSkeleton from './LoadingSkeleton';
 
 const LatestTransactionsStats = () => {
   const { data, isLoading, error } = useQuery({
@@ -33,17 +34,10 @@ const LatestTransactionsStats = () => {
           </CardHeader>
           <CardContent>
             {/* Loading state */}
-            {isLoading && (
-              <>
-                {Array(5)
-                  .fill(0)
-                  .map((_, i) => (
-                    <div key={i} className="py-2">
-                      <Skeleton className="h-12 w-full" />
-                    </div>
-                  ))}
-              </>
-            )}
+            {isLoading && 
+              
+                <LoadingSkeleton count={5} />
+            }
 
             {/* Error state */}
             {!isLoading && error && (
