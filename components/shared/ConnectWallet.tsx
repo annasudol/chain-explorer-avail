@@ -2,9 +2,8 @@
 
 import React from 'react';
 
-import ActionsDemoAlert from '@/components/ActionsDemoAlert';
+import WalletConnect from '@/components/shared/WalletConnect';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import WalletConnect from '@/components/WalletConnect';
 import { useChainStore } from '@/store/useChainStore';
 
 const ConnectWallet = () => {
@@ -16,7 +15,6 @@ const ConnectWallet = () => {
         <WalletConnect />
       ) : (
         <div className="grid gap-6">
-          <ActionsDemoAlert />
           
           <Tabs defaultValue="transfer" className="w-full">
             <TabsList className="grid w-full grid-cols-2">

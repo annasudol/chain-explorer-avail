@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
 import { 
   Table, 
   TableBody, 
@@ -20,6 +19,9 @@ import {
 } from '@/components/ui/table';
 import { fetchGraphQL, LATEST_BLOCKS_QUERY } from '@/lib/graphql';
 import type { BlocksResponse } from '@/types/avail';
+
+import ErrorMessage from './ErrorMessage';
+import LoadingSkeleton from './LoadingSkeleton';
 
 // Types for the extracted components
 type Block = {
@@ -60,30 +62,6 @@ const SearchForm = ({ searchQuery, setSearchQuery, handleSearch }: SearchFormPro
   </form>
 );
 
-// Loading Skeleton Component
-const LoadingSkeleton = () => (
-  <>
-    {Array(10)
-      .fill(0)
-      .map((_, i) => (
-        <div key={i} className="py-2">
-          <Skeleton className="h-12 w-full" />
-        </div>
-      ))
-    }
-  </>
-);
-
-// Error Message Component
-type ErrorMessageProps = {
-  message: string;
-};
-
-const ErrorMessage = ({ message }: ErrorMessageProps) => (
-  <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
-    <p>{message}</p>
-  </div>
-);
 
 // Block Row Component
 type BlockRowProps = {
