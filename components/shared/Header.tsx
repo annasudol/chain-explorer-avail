@@ -10,7 +10,7 @@ import truncateString from "@/lib/truncateString";
 
 const Header = () => {
   const pathname = usePathname();
-  const { walletConnected, walletAddress, walletName } = useChainStore();
+  const { walletConnected, walletAddress } = useChainStore();
 
   const isActive = (path?: string) => {
     if (!pathname || !path) return false;
@@ -70,15 +70,13 @@ const Header = () => {
         <div className="flex items-center gap-2">
           {walletConnected ? (
             <div className="flex items-center gap-2">
-              <div className="hidden text-xs text-muted-foreground md:block">
-                {walletName}
-              </div>
+            
               <Button
                 variant="outline"
                 className="flex items-center gap-1.5 text-xs"
               >
                 <Wallet className="size-3.5" />
-                {walletAddress && truncateString(walletAddress)}
+                {walletAddress && truncateString(walletAddress, 5)}
               </Button>
             </div>
           ) : (
@@ -88,7 +86,7 @@ const Header = () => {
                 size="sm"
                 className="bg-avail-purple hover:bg-avail-indigo"
               >
-                Connect Wallet
+                <Wallet className="size-3.5" /> Connect Wallet
               </Button>
             </Link>
           )}
