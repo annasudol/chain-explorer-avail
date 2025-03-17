@@ -135,7 +135,7 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md overflow-auto min-h-[600px]">
+      <DialogContent className="sm:max-w-md overflow-auto">
         <div className="mx-auto w-full max-w-md border-none shadow-none">
           <DialogHeader className="px-0 pt-0">
             <DialogTitle className="flex items-center gap-2">
@@ -146,7 +146,7 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
               Connect your wallet to perform actions on the Avail network
             </DialogDescription>
           </DialogHeader>
-          <CardContent className="px-0">
+          <CardContent className="px-0 overflow-auto min-h-60">
             {!walletConnected ? (
               <div className="space-y-4">
                 {availableWallets.length === 0 ? (
@@ -162,7 +162,7 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
                   <div className="space-y-2">
                     {availableWallets.map((wallet) => (
                       <Button
-                        key={wallet.extensionName}
+                        key={`wallet-${wallet.extensionName}-${wallet.title}`}
                         variant="outline"
                         className="w-full justify-between hover:bg-muted"
                         onClick={() => handleConnect(wallet)}
