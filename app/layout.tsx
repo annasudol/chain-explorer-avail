@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 
 import Header from '@/components/Header';
 import { siteConfig } from '@/config/siteConfig';
+import { Web3Provider } from "@/providers/Web3Provider";
 
 export const metadata: Metadata = {
   title: {
@@ -37,12 +38,14 @@ export default function RootLayout({
       <body
         className="antialiased"
       >
+        <Web3Provider>
       <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
         {children}
       </main>
     </div>
+    </Web3Provider>
       </body>
     </html>
   );

@@ -1,3 +1,5 @@
+"use client"
+
 import { useQuery } from '@tanstack/react-query';
 import { fetchGraphQL } from 'lib/graphql';
 import { Activity, Clock, Database, Hash, Layers, Users } from 'lucide-react';
