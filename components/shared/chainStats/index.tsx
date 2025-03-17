@@ -8,7 +8,7 @@ import StatCard from './StatCard';
 
 const CHAIN_STATS_QUERY = `
   query GetBlockchainStats {
-    _metadata {
+    metadata: _metadata {
       lastProcessedHeight
       lastProcessedTimestamp
       targetHeight
@@ -35,9 +35,8 @@ const ChainStats = () => {
     refetchInterval: 30000, // Refetch every 30 seconds
   });
 
-  // Access metadata using destructuring to avoid the dangling underscore
-  // eslint-disable-next-line no-underscore-dangle
-  const metadata = data?._metadata;
+
+  const metadata = data?.metadata;
 
   // Simulated stats since the actual API might not have all these
   const simulatedStats = {

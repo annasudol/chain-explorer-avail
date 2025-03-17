@@ -1,7 +1,7 @@
 
-import BlockList from 'components/BlockList';
-
-import LatestTransactionsStats from '@/components/LatestTransactionsStats';
+import BlockList from '@/components/shared/BlockList';
+import ChainStats from '@/components/shared/chainStats';
+import LatestTransactionsStats from '@/components/shared/LatestTransactionsStats';
 
 const MainPage = () => {
  
@@ -15,7 +15,7 @@ const MainPage = () => {
         </p>
       </div>
       
-      {/* <ChainStats /> */}
+      <ChainStats />
       
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <BlockList limit={5} />
