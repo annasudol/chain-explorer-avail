@@ -3,9 +3,11 @@
 
 "use client"
 
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
-import { useBlockDetails } from "@/hooks/use-api";
+import { fetchGraphQL, GET_BLOCK_BY_NUMBER } from "@/lib/graphql";
 
 // import { Placeholder } from "@/components/ui/placeholder";
 // import { 
@@ -20,9 +22,30 @@ import { useBlockDetails } from "@/hooks/use-api";
 
 const BlockDetailPage = () => {
   const { blockNumber } = useParams<{ blockNumber: string }>();
-  const { data, isLoading, error } = useBlockDetails(blockNumber || "");
-  console.log(data, isLoading, error);
-
+  // const { data, isLoading, error } = useBlockDetails(blockNumber || "");
+  // console.log(data, isLoading, error);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["blockDetails", blockNumber],
+    queryFn: () => {
+      if (!blockNumber || Number.isNaN(Number(blockNumber))) {
+        throw new Error("Invalid block number");
+      }
+      return fetchGraphQL(GET_BLOCK_BY_NUMBER, { blockNumber: Number(blockNumber) });
+    },
+    staleTime: 60000, // 1 minute
+    enabled: !!blockNumber && !Number.isNaN(Number(blockNumber)),
+  });
+  useEffect(() => {
+    if (data?.data?.blocks[0]) {
+      console.log(data);
+    }
+    if (isLoading) {
+      console.log("Loading...");
+    }
+    if (error) {
+      console.error(error);
+    }
+  }, [data, isLoading, error])
   // if (error) {
   //   return (
   //     <div className="space-y-8">

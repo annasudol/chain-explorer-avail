@@ -94,6 +94,37 @@ export const LATEST_EXTRINSICS_QUERY = `
   }
 `;
 
+export const GET_BLOCK_BY_NUMBER = `
+  query GetBlockByNumber($blockNumber: Int!) {
+    block(blockNumber: $blockNumber) {
+      id
+      blockNumber
+      hash
+      timestamp
+      extrinsicCount
+      transactionCount
+      dataTransactionCount
+      totalDataSize
+      producedBy
+      extrinsics {
+        id
+        module
+        timestamp
+        txHash
+        argsName
+        argsValue
+        extrinsicIndex
+        hash
+        success
+        signature
+        signer
+        feesRounded
+      }
+    }
+  }
+`;
+
+
 export function useGraphQLQuery<T>(query: string, variables = {}) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
@@ -131,3 +162,17 @@ export function useGraphQLQuery<T>(query: string, variables = {}) {
 
   return { data, loading, error };
 }
+
+// export function useBlockDetails(blockNumber: string) {
+//   return useQuery({
+//     queryKey: ["blockDetails", blockNumber],
+//     queryFn: () => {
+//       if (!blockNumber || Number.isNaN(Number(blockNumber))) {
+//         throw new Error("Invalid block number");
+//       }
+//       return fetchGraphQL(GET_BLOCK_BY_NUMBER, { blockNumber: Number(blockNumber) });
+//     },
+//     staleTime: 60000, // 1 minute
+//     enabled: !!blockNumber && !Number.isNaN(Number(blockNumber)),
+//   });
+// }

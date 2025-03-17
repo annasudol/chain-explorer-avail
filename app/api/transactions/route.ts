@@ -1,3 +1,4 @@
+import { envs } from "lib/envs";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -39,7 +40,7 @@ export async function GET(req: NextRequest) {
     const query = customQuery || defaultQuery;
 
     // Send request to GraphQL API
-    const response = await fetch("https://turing-indexer.avail.so", {
+    const response = await fetch(envs.NEXT_PUBLIC_INDEXER_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
