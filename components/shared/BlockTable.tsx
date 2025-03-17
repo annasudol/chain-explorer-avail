@@ -57,9 +57,11 @@ const BlockRow = ({
           </span>
         </TableCell>
         <TableCell>
-          <span className="font-mono text-xs">{formatDistanceToNow(new Date(block.timestamp), {
-            addSuffix: true,
-          })}</span>
+          <span className="font-mono text-xs">
+            {formatDistanceToNow(new Date(block.timestamp), {
+              addSuffix: true,
+            })}
+          </span>
         </TableCell>
         <TableCell className="font-mono text-xs">
           {block.stateRoot ? `${block.stateRoot.slice(0, 8)}...` : "N/A"}

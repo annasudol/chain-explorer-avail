@@ -1,6 +1,8 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+
+import type { PageInfoType } from "@/types";
+
 import { Button } from "./button";
-import { PageInfoType } from "@/types";
 
 type PaginationProps = {
   cursor?: string;

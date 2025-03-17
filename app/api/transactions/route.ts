@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
- 
     let queryData;
     try {
       // Get query from request body

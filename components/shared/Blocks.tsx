@@ -75,14 +75,18 @@ const Blocks = () => {
           block.hash.toLowerCase().includes(searchQuery.toLowerCase()),
       )
     : blocks;
-    
+
   // Adjust page info when filtering results
-  const adjustedPageInfo = searchQuery && pageInfo
-    ? {
-        hasNextPage: filteredBlocks.length > 0 ? (filteredBlocks.length === blocks.length && pageInfo.hasNextPage) : false,
-        endCursor: pageInfo.endCursor
-      }
-    : pageInfo;
+  const adjustedPageInfo =
+    searchQuery && pageInfo
+      ? {
+          hasNextPage:
+            filteredBlocks.length > 0
+              ? filteredBlocks.length === blocks.length && pageInfo.hasNextPage
+              : false,
+          endCursor: pageInfo.endCursor,
+        }
+      : pageInfo;
 
   // Render function to determine which component to show based on state
   const renderContent = () => {
@@ -95,7 +99,7 @@ const Blocks = () => {
         <ErrorMessage message="Failed to load blocks. Please try again later." />
       );
     }
-    
+
     return (
       <Content
         blocks={filteredBlocks}

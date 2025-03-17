@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 
 import type { BlocksResponse, ExtrinsicsResponse } from "@/types/avail";
 
-
 /**
  * Executes a GraphQL query against the Avail API.
  *
@@ -22,7 +21,7 @@ export const fetchGraphQL = async (query: string, variables = {}) => {
     //     image_url,
     //   }),
     // });
-    const response = await fetch('/api/transactions', {
+    const response = await fetch("/api/transactions", {
       method: "POST",
       body: JSON.stringify({
         query,

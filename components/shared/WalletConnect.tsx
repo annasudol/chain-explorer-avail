@@ -1,3 +1,4 @@
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import type { Wallet as TalismanWallet } from "@talismn/connect-wallets";
 import { getWallets } from "@talismn/connect-wallets";
 import { Alert, AlertDescription, AlertTitle } from "components/ui/alert";
@@ -12,9 +13,8 @@ import {
 import { AlertCircle, ChevronRight, LogOut, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useChainStore } from "store/useChainStore";
+
 import truncateString from "@/lib/truncateString";
-import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
-import { toast } from "sonner";
 
 interface WalletConnectProps {
   triggerButton?: React.ReactNode;
@@ -41,7 +41,7 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
     };
 
     initWallets();
-  }, [toast]);
+  }, []);
 
   const handleConnect = async (wallet: TalismanWallet) => {
     setIsLoading(true);
@@ -82,9 +82,7 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        {triggerButton ? (
-          triggerButton
-        ) : (
+        {triggerButton || (
           <Button
             variant={walletConnected ? "outline" : "default"}
             size="sm"
@@ -101,7 +99,7 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md overflow-auto">
+      <DialogContent className="overflow-auto sm:max-w-md">
         <div className="mx-auto w-full max-w-md border-none shadow-none">
           <DialogHeader className="px-0 pt-0">
             <DialogTitle className="flex items-center gap-2">
@@ -112,7 +110,7 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
               Connect your wallet to perform actions on the Avail network
             </DialogDescription>
           </DialogHeader>
-          <CardContent className="px-0 overflow-auto min-h-60">
+          <CardContent className="min-h-60 overflow-auto px-0">
             {!walletConnected ? (
               <div className="space-y-4">
                 {availableWallets.length === 0 ? (
