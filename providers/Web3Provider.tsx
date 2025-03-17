@@ -21,16 +21,8 @@ const queryClient = new QueryClient({
 export function Web3Provider(props: Props) {
   return (
     <QueryClientProvider client={queryClient}>
-  {props.children}
+      {props.children}
   </QueryClientProvider>
   )
-  // return (
-  //   <>
-  //     {/* <WagmiProvider config={rainbowConfig} initialState={props.initialState}>
-  //       <QueryClientProvider client={queryClient}>
-  //         <RainbowKitProvider>{props.children}</RainbowKitProvider>
-  //       </QueryClientProvider>
-  //     </WagmiProvider> */}
-  //   </>
-  // );
+
 }

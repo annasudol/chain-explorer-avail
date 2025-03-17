@@ -38,14 +38,14 @@ export default function RootLayout({
       <body
         className="antialiased"
       >
-        <Web3Provider>
-      <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="flex-1">
-        {children}
-      </main>
-    </div>
-    </Web3Provider>
+      <Web3Provider>
+        <div className="flex min-h-screen flex-col">
+          <Header />
+          <main className="flex-1">
+            {children}
+          </main>
+        </div>
+      </Web3Provider>
       </body>
     </html>
   );
