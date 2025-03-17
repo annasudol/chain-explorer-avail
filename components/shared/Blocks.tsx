@@ -2,37 +2,20 @@
 "use client"
 
 import { useQuery } from '@tanstack/react-query';
-import { formatDistanceToNow } from 'date-fns';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from '@/components/ui/table';
 import { fetchGraphQL, LATEST_BLOCKS_QUERY } from '@/lib/graphql';
 import type { BlocksResponse } from '@/types/avail';
 
+import BlockTable from './BlockTable';
 import ErrorMessage from './ErrorMessage';
 import LoadingSkeleton from './LoadingSkeleton';
 
-// Types for the extracted components
-type Block = {
-  id: string;
-  number: number;
-  hash: string;
-  parentHash: string;
-  timestamp: string;
-  stateRoot: string;
-};
-
+// Type for page info
 type PageInfoType = {
   hasNextPage: boolean;
   endCursor: string;
@@ -60,62 +43,6 @@ const SearchForm = ({ searchQuery, setSearchQuery, handleSearch }: SearchFormPro
       <Search className="mr-2 size-4" /> Search
     </Button>
   </form>
-);
-
-
-// Block Row Component
-type BlockRowProps = {
-  block: Block;
-};
-
-const BlockRow = ({ block }: BlockRowProps) => (
-  <TableRow key={block.id}>
-    <TableCell className="font-medium">
-      {block.number.toLocaleString()}
-    </TableCell>
-    <TableCell className="font-mono text-xs">
-      {block.hash.slice(0, 10)}...{block.hash.slice(-6)}
-    </TableCell>
-    <TableCell className="font-mono text-xs">
-      {block.parentHash.slice(0, 10)}...{block.parentHash.slice(-6)}
-    </TableCell>
-    <TableCell>
-      {formatDistanceToNow(new Date(block.timestamp), { addSuffix: true })}
-    </TableCell>
-    <TableCell className="font-mono text-xs">
-      {block.stateRoot.slice(0, 10)}...
-    </TableCell>
-  </TableRow>
-);
-
-// Blocks Table Component
-type BlocksTableProps = {
-  blocks: Block[];
-};
-
-const BlocksTable = ({ blocks }: BlocksTableProps) => (
-  <Table>
-    <TableHeader>
-      <TableRow>
-        <TableHead>Block</TableHead>
-        <TableHead>Hash</TableHead>
-        <TableHead>Parent Hash</TableHead>
-        <TableHead>Time</TableHead>
-        <TableHead>State Root</TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      {blocks.length > 0 ? (
-        blocks.map((block) => <BlockRow key={block.id} block={block} />)
-      ) : (
-        <TableRow>
-          <TableCell colSpan={5} className="py-8 text-center">
-            No blocks found
-          </TableCell>
-        </TableRow>
-      )}
-    </TableBody>
-  </Table>
 );
 
 // Pagination Component
@@ -152,7 +79,7 @@ const Pagination = ({ cursor, setCursor, pageInfo }: PaginationProps) => (
 
 // Content Component
 type ContentProps = {
-  blocks: Block[];
+  blocks: any[];
   cursor: string | null;
   setCursor: (cursor: string | null) => void;
   pageInfo?: PageInfoType | null;
@@ -160,8 +87,7 @@ type ContentProps = {
 
 const Content = ({ blocks, cursor, setCursor, pageInfo }: ContentProps) => (
   <>
-  {pageInfo?.hasNextPage}
-    <BlocksTable blocks={blocks} />
+    <BlockTable blocks={blocks} variant="detailed" />
     <Pagination cursor={cursor} setCursor={setCursor} pageInfo={pageInfo} />
   </>
 );
