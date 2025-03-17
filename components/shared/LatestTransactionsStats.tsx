@@ -1,5 +1,6 @@
 "use client";
 
+import BadgeInfo from "components/shared/BadgeInfo";
 import {
   Card,
   CardContent,
@@ -9,7 +10,7 @@ import {
 } from "components/ui/card";
 import { formatDistanceToNow } from "date-fns";
 import { useGetLatestExtrinsic } from "lib/graphql";
-import BadgeInfo from "components/shared/BadgeInfo";
+
 import { ErrorMessage } from "@/components/shared/ErrorMessage";
 
 import { LoadingSkeleton } from "./LoadingSkeleton";

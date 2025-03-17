@@ -36,6 +36,7 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
         const wallets = getWallets();
         setAvailableWallets(wallets);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Failed to get wallets:", error);
       }
     };
@@ -64,7 +65,6 @@ const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
         // Use first account for simplicity
         const account = accounts[0];
         setWalletConnected(true, wallet.title, account);
-      } else {
       }
     } catch (error) {
       // eslint-disable-next-line no-console

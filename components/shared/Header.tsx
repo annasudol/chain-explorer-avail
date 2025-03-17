@@ -1,9 +1,11 @@
 "use client";
 
-import { AlignJustify, Blocks, Home, LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { AlignJustify, Blocks, Home } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import WalletConnect from "./WalletConnect";
+
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -14,7 +16,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
+
+import WalletConnect from "./WalletConnect";
 
 interface NavItem {
   path: string;
@@ -81,7 +84,7 @@ const Header = () => {
           <WalletConnect />
           <Drawer direction="right">
             <DrawerTrigger>
-              <Button size="sm" className="sm:hidden w-10" asChild>
+              <Button size="sm" className="w-10 sm:hidden" asChild>
                 <AlignJustify className="size-3" />
               </Button>
             </DrawerTrigger>
@@ -92,7 +95,7 @@ const Header = () => {
                   Choose a page to navigate to
                 </DrawerDescription>
               </DrawerHeader>
-              <nav className="items-center gap-6 flex flex-col mt-4">
+              <nav className="mt-4 flex flex-col items-center gap-6">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   return (

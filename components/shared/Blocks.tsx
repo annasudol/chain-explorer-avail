@@ -6,13 +6,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Pagination } from "@/components/ui/pagination";
 import { useGetBlock } from "@/lib/graphql";
+import type { PageInfoType } from "@/types";
 
 import { BlockTable } from "./BlockTable";
 import { ErrorMessage } from "./ErrorMessage";
 import { LoadingSkeleton } from "./LoadingSkeleton";
-import { Pagination } from "@/components/ui/pagination";
-import { PageInfoType } from "@/types";
 
 type SearchFormProps = {
   searchQuery: string;

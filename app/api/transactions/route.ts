@@ -1,7 +1,8 @@
-import { LATEST_BLOCKS_QUERY } from "@/lib/graphql";
 import { envs } from "lib/envs";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+
+import { LATEST_BLOCKS_QUERY } from "@/lib/graphql";
 
 export async function POST(req: NextRequest) {
   try {

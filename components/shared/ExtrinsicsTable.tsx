@@ -1,5 +1,6 @@
 "use client";
 
+import BadgeInfo from "components/shared/BadgeInfo";
 import { CheckCircle2, Copy } from "lucide-react";
 import { useState } from "react";
 
@@ -14,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import truncateString from "@/lib/truncateString";
 import type { Extrinsic } from "@/types/avail";
-import BadgeInfo from "components/shared/BadgeInfo";
+
 export type ExtrinsicsTableProps = {
   extrinsics: Extrinsic[];
   formatDate: (dateString: string) => string;
