@@ -6,6 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useChainStore } from "store/useChainStore";
 
+import truncateString from "@/lib/truncateString";
+
 const Header = () => {
   const pathname = usePathname();
   const { walletConnected, walletAddress, walletName } = useChainStore();
@@ -14,10 +16,7 @@ const Header = () => {
     return pathname === path;
   };
 
-  const formatAddress = (address: string | null) => {
-    if (!address) return "";
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
-  };
+ 
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -35,7 +34,7 @@ const Header = () => {
               href="/"
               className={`flex items-center gap-1 text-sm font-medium ${
                 isActive("/")
-                  ? "text-foreground"
+                  ? "text-gray-900"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -78,7 +77,7 @@ const Header = () => {
                 className="flex items-center gap-1.5 text-xs"
               >
                 <Wallet className="size-3.5" />
-                {formatAddress(walletAddress)}
+                {walletAddress && truncateString(walletAddress)}
               </Button>
             </div>
           ) : (

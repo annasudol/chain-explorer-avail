@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import truncateHash from "@/lib/truncateHash";
+import truncateString from "@/lib/truncateString";
 
 export type Extrinsic = {
   id: string;
@@ -62,7 +62,7 @@ const ExtrinsicsTable = ({ extrinsics, formatDate }: ExtrinsicsTableProps) => {
               <TableCell>
                 <div className="flex items-center gap-2">
                   <span className="font-mono">
-                    {truncateHash(extrinsic.hash)}
+                    {truncateString(extrinsic.hash)}
                   </span>
                   <Button
                     variant="ghost"
@@ -83,7 +83,7 @@ const ExtrinsicsTable = ({ extrinsics, formatDate }: ExtrinsicsTableProps) => {
                 {extrinsic.signer ? (
                   <div className="flex items-center gap-2">
                     <span className="font-mono">
-                      {truncateHash(extrinsic.signer || "", 6)}
+                      {truncateString(extrinsic.signer || "", 6)}
                     </span>
                     <Button
                       variant="ghost"
