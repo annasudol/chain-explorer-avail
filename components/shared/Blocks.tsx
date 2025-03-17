@@ -1,15 +1,13 @@
 
 "use client"
 
-import { useQuery } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { fetchGraphQL, LATEST_BLOCKS_QUERY } from '@/lib/graphql';
-import type { BlocksResponse } from '@/types/avail';
+import { useGetBlock } from '@/lib/graphql';
 
 import BlockTable from './BlockTable';
 import ErrorMessage from './ErrorMessage';
@@ -47,7 +45,7 @@ const SearchForm = ({ searchQuery, setSearchQuery, handleSearch }: SearchFormPro
 
 // Pagination Component
 type PaginationProps = {
-  cursor: string | null;
+  cursor?: string;
   setCursor: (cursor: string | null) => void;
   pageInfo?: PageInfoType | null;
 };
@@ -80,7 +78,7 @@ const Pagination = ({ cursor, setCursor, pageInfo }: PaginationProps) => (
 // Content Component
 type ContentProps = {
   blocks: any[];
-  cursor: string | null;
+  cursor?: string;
   setCursor: (cursor: string | null) => void;
   pageInfo?: PageInfoType | null;
 };
@@ -95,25 +93,9 @@ const Content = ({ blocks, cursor, setCursor, pageInfo }: ContentProps) => (
 // Main Blocks Component
 const Blocks = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [cursor, setCursor] = useState<string | null>(null);
+  const [cursor, setCursor] = useState<string | undefined>(undefined);
 
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ['blocks', cursor],
-    queryFn: async () => {
-      let modifiedQuery = LATEST_BLOCKS_QUERY;
-      
-      if (cursor) {
-        modifiedQuery = modifiedQuery.replace(
-          'first: 15',
-          `first: 15, after: "${cursor}"`
-        );
-      }
-      
-      const result = await fetchGraphQL(modifiedQuery) as BlocksResponse;
-      return result;
-    },
-    refetchInterval: 30000, // Refetch every 30 seconds
-  });
+  const { data, isLoading, error, refetch } = useGetBlock(cursor);
 
   const blocks = data?.blocks?.edges.map(edge => edge.node) || [];
   const pageInfo = data?.blocks?.pageInfo;

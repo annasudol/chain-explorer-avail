@@ -1,30 +1,17 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query';
 import { Button } from 'components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import { fetchGraphQL, LATEST_BLOCKS_QUERY } from 'lib/graphql';
+import { useGetLatestBlock } from 'lib/graphql';
 import { ChevronsRight } from 'lucide-react';
 import Link from 'next/link';
-import type { BlocksResponse } from 'types/avail';
 
 import BlockTable from './BlockTable';
 import ErrorMessage from './ErrorMessage';
 import LoadingSkeleton from './LoadingSkeleton';
 
 const BlockList = ({ limit = 5 }: { limit?: number }) => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['latestBlocks'],
-    queryFn: async () => {
-      const modifiedQuery = LATEST_BLOCKS_QUERY.replace(
-        'first: 15',
-        `first: ${limit}`,
-      );
-      return fetchGraphQL(modifiedQuery) as Promise<BlocksResponse>;
-    },
-    refetchInterval: 30000, // Refetch every 30 seconds
-  });
-
+  const { data, isLoading, error } = useGetLatestBlock(limit);
   const blocks = data?.blocks?.edges.map((edge) => edge.node) || [];
 
   if (error) {

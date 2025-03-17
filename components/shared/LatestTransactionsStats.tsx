@@ -1,25 +1,16 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from 'components/ui/card';
 import { formatDistanceToNow } from 'date-fns';
-import { fetchGraphQL, LATEST_EXTRINSICS_QUERY } from 'lib/graphql';
+import { useGetLatestExtrinsic } from 'lib/graphql';
 import { Check, X } from 'lucide-react';
-import type { ExtrinsicsResponse } from 'types/avail';
 
 import ErrorMessage from '@/components/shared/ErrorMessage';
 
 import LoadingSkeleton from './LoadingSkeleton';
 
 const LatestTransactionsStats = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['latestExtrinsics'],
-    queryFn: async () => {
-      return fetchGraphQL(LATEST_EXTRINSICS_QUERY) as Promise<ExtrinsicsResponse>;
-    },
-    refetchInterval: 30000, // Refetch every 30 seconds
-  });
-
+  const { data, isLoading, error } = useGetLatestExtrinsic();
   const extrinsics = data?.extrinsics?.edges.map(edge => edge.node) || [];
 
   return (

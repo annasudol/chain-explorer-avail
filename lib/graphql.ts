@@ -1,6 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+import type { BlocksResponse, ExtrinsicsResponse } from '@/types/avail';
 
 const AVAIL_INDEXER_URL = 'https://turing-indexer.avail.so/graphql';
 
@@ -119,55 +121,49 @@ export const GET_BLOCK_BY_NUMBER = `
   }
 `;
 
-
-export function useGraphQLQuery<T>(query: string, variables = {}) {
-  const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await fetchGraphQL(query, variables);
-
-        if (isMounted) {
-          setData(result);
-          setError(null);
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError(err instanceof Error ? err : new Error(String(err)));
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [query, JSON.stringify(variables)]);
-
-  return { data, loading, error };
+const INTERVAL = 30000;  // Refetch every 30 seconds
+export const useGetLatestBlock = (limit: number) => {
+  return useQuery({
+    queryKey: ['latestBlocks'],
+    queryFn: async () => {
+      const modifiedQuery = LATEST_BLOCKS_QUERY.replace(
+        'first: 15',
+        `first: ${limit}`,
+      );
+      return fetchGraphQL(modifiedQuery) as Promise<BlocksResponse>;
+    },
+    refetchInterval: INTERVAL,
+  });
 }
 
-// export function useBlockDetails(blockNumber: string) {
-//   return useQuery({
-//     queryKey: ["blockDetails", blockNumber],
-//     queryFn: () => {
-//       if (!blockNumber || Number.isNaN(Number(blockNumber))) {
-//         throw new Error("Invalid block number");
-//       }
-//       return fetchGraphQL(GET_BLOCK_BY_NUMBER, { blockNumber: Number(blockNumber) });
-//     },
-//     staleTime: 60000, // 1 minute
-//     enabled: !!blockNumber && !Number.isNaN(Number(blockNumber)),
-//   });
-// }
+
+export const useGetBlock=(cursor?: string)=> {
+   return useQuery({
+    queryKey: ['blocks', cursor],
+    queryFn: async () => {
+      let modifiedQuery = LATEST_BLOCKS_QUERY;
+      
+      if (cursor) {
+        modifiedQuery = modifiedQuery.replace(
+          'first: 15',
+          `first: 15, after: "${cursor}"`
+        );
+      }
+      
+      const result = await fetchGraphQL(modifiedQuery) as BlocksResponse;
+      return result;
+    },
+    refetchInterval: INTERVAL, 
+  });
+}
+
+
+export const useGetLatestExtrinsic=()=>{
+  return useQuery({
+      queryKey: ['latestExtrinsics'],
+      queryFn: async () => {
+        return fetchGraphQL(LATEST_EXTRINSICS_QUERY) as Promise<ExtrinsicsResponse>;
+      },
+      refetchInterval: INTERVAL, 
+    });
+}
