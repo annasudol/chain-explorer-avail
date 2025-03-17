@@ -1,23 +1,49 @@
 "use client";
 
-import { Button } from "components/ui/button";
-import { Activity, Blocks, Home, Wallet } from "lucide-react";
+import { AlignJustify, Blocks, Home, LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useChainStore } from "store/useChainStore";
+import WalletConnect from "./WalletConnect";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+import { Button } from "@/components/ui/button";
 
-import truncateString from "@/lib/truncateString";
+interface NavItem {
+  path: string;
+  label: string;
+  icon: LucideIcon;
+}
 
 const Header = () => {
   const pathname = usePathname();
-  const { walletConnected, walletAddress } = useChainStore();
 
   const isActive = (path?: string) => {
     if (!pathname || !path) return false;
     // Check if current path starts with the given path to handle nested routes
     // or exact match for home/root routes
-    return path === '/' ? pathname === '/' : pathname.startsWith(path);
+    return path === "/" ? pathname === "/" : pathname.startsWith(path);
   };
+  
+  const navItems: NavItem[] = [
+    {
+      path: "/",
+      label: "Dashboard",
+      icon: Home
+    },
+    {
+      path: "/blocks",
+      label: "Blocks",
+      icon: Blocks
+    }
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -30,66 +56,63 @@ const Header = () => {
             <span className="hidden sm:inline-block">Avail Explorer</span>
           </Link>
 
-          <nav className="ml-8 hidden items-center gap-6 md:flex">
-            <Link
-              href="/"
-              className={`flex items-center gap-1 text-sm font-medium ${
-                isActive("/")
-                  ? "text-gray-900"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <Home className="size-4" />
-              Dashboard
-            </Link>
-            <Link
-              href="/blocks"
-              className={`flex items-center gap-1 text-sm font-medium ${
-                isActive("/blocks")
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <Blocks className="size-4" />
-              Blocks
-            </Link>
-            <Link
-              href="/actions"
-              className={`flex items-center gap-1 text-sm font-medium ${
-                isActive("/actions")
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <Activity className="size-4" />
-              Actions
-            </Link>
+          <nav className="ml-8 hidden items-center gap-6 sm:flex">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  className={`flex items-center gap-1 text-sm font-medium ${
+                    isActive(item.path)
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <Icon className="size-4" />
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 
         <div className="flex items-center gap-2">
-          {walletConnected ? (
-            <div className="flex items-center gap-2">
-            
-              <Button
-                variant="outline"
-                className="flex items-center gap-1.5 text-xs"
-              >
-                <Wallet className="size-3.5" />
-                {walletAddress && truncateString(walletAddress, 5)}
-              </Button>
-            </div>
-          ) : (
-            <Link href="/actions">
-              <Button
-                variant="default"
-                size="sm"
-                className="bg-avail-purple hover:bg-avail-indigo"
-              >
-                <Wallet className="size-3.5" /> Connect Wallet
-              </Button>
-            </Link>
-          )}
+          <WalletConnect />
+          <Drawer direction="right">
+        <DrawerTrigger><Button size="sm" className="sm:hidden w-10" asChild><AlignJustify className="size-3" /></Button></DrawerTrigger>
+        <DrawerContent >
+          <DrawerHeader>
+            <DrawerTitle>Navigation</DrawerTitle>
+            <DrawerDescription>Choose a page to navigate to</DrawerDescription>
+          </DrawerHeader>
+          <nav className="items-center gap-6 flex flex-col mt-4">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <DrawerClose key={item.path} asChild>
+                  <Link
+                    href={item.path}
+                    className={`flex items-center gap-1 text-sm font-medium ${
+                      isActive(item.path)
+                        ? "text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <Icon className="size-4" />
+                    {item.label}
+                  </Link>
+                </DrawerClose>
+              );
+            })}
+          </nav>
+          <DrawerFooter>
+            <DrawerClose>
+              <Button variant="outline">Cancel</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
         </div>
       </div>
     </header>

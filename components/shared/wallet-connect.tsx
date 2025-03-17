@@ -1,4 +1,3 @@
-
 import { Wallet } from "lucide-react";
 import { useState } from "react";
 
@@ -34,7 +33,7 @@ export function WalletConnect() {
 
   const handleConnect = (walletName: string) => {
     setIsConnecting(true);
-    
+
     // Simulating wallet connection
     setTimeout(() => {
       setConnectedWallet(walletName);
@@ -65,9 +64,13 @@ export function WalletConnect() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button 
-          variant={connectedWallet ? "outline" : "default"} 
-          className={connectedWallet ? "bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50" : ""}
+        <Button
+          variant={connectedWallet ? "outline" : "default"}
+          className={
+            connectedWallet
+              ? "bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50"
+              : ""
+          }
         >
           <Wallet className="mr-2 size-4" />
           {connectedWallet ? displayAddress : "Connect Wallet"}
@@ -96,9 +99,9 @@ export function WalletConnect() {
                   {connectedWallet.charAt(0)}
                 </div>
               </div>
-              <Button 
-                variant="destructive" 
-                onClick={handleDisconnect} 
+              <Button
+                variant="destructive"
+                onClick={handleDisconnect}
                 className="w-full"
               >
                 Disconnect

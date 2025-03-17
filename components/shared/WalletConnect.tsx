@@ -10,12 +10,23 @@ import {
   CardHeader,
   CardTitle,
 } from "components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "components/ui/dialog";
 import { useToast } from "hooks/use-toast";
 import { AlertCircle, ChevronRight, LogOut, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useChainStore } from "store/useChainStore";
+import truncateString from "@/lib/truncateString";
 
-const WalletConnect = () => {
+interface WalletConnectProps {
+  triggerButton?: React.ReactNode;
+}
+
+const WalletConnect = ({ triggerButton }: WalletConnectProps = {}) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const { walletConnected, walletAddress, walletName, setWalletConnected } =
     useChainStore();
   const [availableWallets, setAvailableWallets] = useState<TalismanWallet[]>(
@@ -101,92 +112,113 @@ const WalletConnect = () => {
       title: "Wallet Disconnected",
       description: "Your wallet has been disconnected.",
     });
+    setDialogOpen(false);
   };
 
   return (
-    <Card className="mx-auto w-full max-w-md">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Wallet className="size-5 text-avail-purple" />
-          Wallet Connection
-        </CardTitle>
-        <CardDescription>
-          Connect your wallet to perform actions on the Avail network
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        {!walletConnected ? (
-          <div className="space-y-4">
-            {availableWallets.length === 0 ? (
-              <Alert>
-                <AlertCircle className="size-4" />
-                <AlertTitle>No Wallets Found</AlertTitle>
-                <AlertDescription>
-                  Please install a Substrate-compatible wallet extension like
-                  Talisman or Polkadot.js
-                </AlertDescription>
-              </Alert>
-            ) : (
-              <div className="space-y-2">
-                {availableWallets.map((wallet) => (
-                  <Button
-                    key={wallet.extensionName}
-                    variant="outline"
-                    className="w-full justify-between hover:bg-muted"
-                    onClick={() => handleConnect(wallet)}
-                    disabled={isLoading}
-                  >
-                    <div className="flex items-center gap-2">
-                      {wallet.logo && (
-                        <img
-                          src={wallet.logo.src}
-                          alt={`${wallet.title} logo`}
-                          className="size-5"
-                        />
-                      )}
-                      <span>{wallet.title}</span>
-                      {!wallet.installed && (
-                        <span className="text-xs text-muted-foreground">
-                          (Not Installed)
-                        </span>
-                      )}
-                    </div>
-                    <ChevronRight className="size-4" />
-                  </Button>
-                ))}
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <div className="rounded-lg bg-muted p-4">
-              <div className="mb-2 flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">
-                  Connected with {walletName}
-                </div>
-              </div>
-              <div className="break-all font-mono text-sm">{walletAddress}</div>
-            </div>
-          </div>
-        )}
-      </CardContent>
-      <CardFooter>
-        {!walletConnected ? (
-          <div className="w-full text-center text-sm italic text-muted-foreground">
-            Select a wallet to connect
-          </div>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <DialogTrigger asChild>
+        {triggerButton ? (
+          triggerButton
         ) : (
           <Button
-            variant="outline"
-            className="w-full gap-2"
-            onClick={handleDisconnect}
+            variant={walletConnected ? "outline" : "default"}
+            size="sm"
+            className={walletConnected ? "flex items-center gap-1.5 text-xs" : "bg-avail-purple hover:bg-avail-indigo"}
           >
-            <LogOut className="size-4" />
-            Disconnect Wallet
+            <Wallet className="size-3.5" />
+            {walletConnected 
+              ? walletAddress && truncateString(walletAddress, 5)
+              : "Connect Wallet"}
           </Button>
         )}
-      </CardFooter>
-    </Card>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <Card className="mx-auto w-full max-w-md border-none shadow-none">
+          <CardHeader className="px-0 pt-0">
+            <CardTitle className="flex items-center gap-2">
+              <Wallet className="size-5 text-avail-purple" />
+              Wallet Connection
+            </CardTitle>
+            <CardDescription>
+              Connect your wallet to perform actions on the Avail network
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="px-0">
+            {!walletConnected ? (
+              <div className="space-y-4">
+                {availableWallets.length === 0 ? (
+                  <Alert>
+                    <AlertCircle className="size-4" />
+                    <AlertTitle>No Wallets Found</AlertTitle>
+                    <AlertDescription>
+                      Please install a Substrate-compatible wallet extension like
+                      Talisman or Polkadot.js
+                    </AlertDescription>
+                  </Alert>
+                ) : (
+                  <div className="space-y-2">
+                    {availableWallets.map((wallet) => (
+                      <Button
+                        key={wallet.extensionName}
+                        variant="outline"
+                        className="w-full justify-between hover:bg-muted"
+                        onClick={() => handleConnect(wallet)}
+                        disabled={isLoading}
+                      >
+                        <div className="flex items-center gap-2">
+                          {wallet.logo && (
+                            <img
+                              src={wallet.logo.src}
+                              alt={`${wallet.title} logo`}
+                              className="size-5"
+                            />
+                          )}
+                          <span>{wallet.title}</span>
+                          {!wallet.installed && (
+                            <span className="text-xs text-muted-foreground">
+                              (Not Installed)
+                            </span>
+                          )}
+                        </div>
+                        <ChevronRight className="size-4" />
+                      </Button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="rounded-lg bg-muted p-4">
+                  <div className="mb-2 flex items-center justify-between">
+                    <div className="text-sm text-muted-foreground">
+                      Connected with {walletName}
+                    </div>
+                  </div>
+                  <div className="break-all font-mono text-sm">{walletAddress}</div>
+                </div>
+              </div>
+            )}
+          </CardContent>
+          <CardFooter className="px-0 pb-0">
+            {!walletConnected ? (
+              <div className="w-full text-center text-sm italic text-muted-foreground">
+                Select a wallet to connect
+              </div>
+            ) : (
+              <Button
+                variant="outline"
+                className="w-full gap-2"
+                onClick={handleDisconnect}
+              >
+                <LogOut className="size-4" />
+                Disconnect Wallet
+              </Button>
+            )}
+          </CardFooter>
+        </Card>
+      </DialogContent>
+    </Dialog>
   );
 };
 
