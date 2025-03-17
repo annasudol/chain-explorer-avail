@@ -12,8 +12,11 @@ const Header = () => {
   const pathname = usePathname();
   const { walletConnected, walletAddress, walletName } = useChainStore();
 
-  const isActive = (path: string) => {
-    return pathname === path;
+  const isActive = (path?: string) => {
+    if (!pathname || !path) return false;
+    // Check if current path starts with the given path to handle nested routes
+    // or exact match for home/root routes
+    return path === '/' ? pathname === '/' : pathname.startsWith(path);
   };
 
   return (
