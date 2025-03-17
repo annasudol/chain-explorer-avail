@@ -18,7 +18,7 @@ const queryClient = new QueryClient({
     },
   },
 });
-export function Web3Provider(props: Props) {
+export function QueryProvider(props: Props) {
   return (
     <QueryClientProvider client={queryClient}>
       {props.children}

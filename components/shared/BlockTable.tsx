@@ -38,7 +38,7 @@ const BlockRow = ({
 }) => {
   if (variant === "detailed") {
     return (
-      <TableRow>
+      <TableRow key={block.id}>
         <TableCell className="font-medium">
           <Link href={`/block/${block.number}`} className="hover:underline">
             {block.number.toLocaleString()}
@@ -57,9 +57,9 @@ const BlockRow = ({
           </span>
         </TableCell>
         <TableCell>
-          {formatDistanceToNow(new Date(block.timestamp), {
+          <span className="font-mono text-xs">{formatDistanceToNow(new Date(block.timestamp), {
             addSuffix: true,
-          })}
+          })}</span>
         </TableCell>
         <TableCell className="font-mono text-xs">
           {block.stateRoot ? `${block.stateRoot.slice(0, 8)}...` : "N/A"}
