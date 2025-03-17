@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ConnectWallet from '@/components/ConnectWallet';
+import ConnectWallet from '@/components/shared/ConnectWallet';
 
 const ActionsPage = () => {
 

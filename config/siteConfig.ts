@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: 'Avail Chain Explorer"',
+  name: 'Avail Chain Explorer',
   emoji: '🚀',
   title: 'Avail Chain Explorer',
   description: 'Explore the Avail blockchain',
