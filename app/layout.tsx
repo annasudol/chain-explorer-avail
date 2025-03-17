@@ -2,8 +2,8 @@ import "@/styles/global.css";
 
 import type { Metadata } from "next";
 
+import Header from '@/components/Header';
 import { siteConfig } from '@/config/siteConfig';
-
 
 export const metadata: Metadata = {
   title: {
@@ -37,8 +37,15 @@ export default function RootLayout({
       <body
         className="antialiased"
       >
+      <div className="flex min-h-screen flex-col">
+      <Header />
+      <main className="flex-1">
         {children}
+      </main>
+    </div>
       </body>
     </html>
   );
 }
+
+

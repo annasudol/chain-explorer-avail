@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from 'components/ui/button';
 import { Activity, Blocks, Home, Wallet } from 'lucide-react';
 import Link from 'next/link';
