@@ -6,6 +6,15 @@ import type { BlocksResponse, ExtrinsicsResponse } from '@/types/avail';
 
 const AVAIL_INDEXER_URL = 'https://turing-indexer.avail.so';
 
+/**
+ * Executes a GraphQL query against the Avail API.
+ *
+ * @param {string} query - The GraphQL query string to execute.
+ * @param {object} [variables={}] - An optional object containing variables for the GraphQL query.
+ * @returns {Promise<any>} - A promise that resolves with the data returned by the GraphQL API.
+ * @throws Will throw an error if the network request fails or if the GraphQL API returns errors.
+ */
+
 export const fetchGraphQL = async (query: string, variables = {}) => {
   try {
     const response = await fetch(AVAIL_INDEXER_URL, {
@@ -98,7 +107,7 @@ export const fetchGraphQL = async (query: string, variables = {}) => {
 
  const GET_BLOCK_BY_NUMBER = `
   query GetBlockByNumber {
-   blocks(filter: {number: {equalTo: 1525914}}, first: 1) {
+    blocks(filter: {number: {equalTo: 1525914}}, first: 1) {
       nodes {
         id
         number
@@ -135,6 +144,14 @@ const CHAIN_STATS_QUERY = `
 `;
 
 const INTERVAL = 30000;  // Refetch every 30 seconds
+
+  /**
+   * Fetches the latest `limit` blocks from the Avail API.
+   *
+   * @param {number} limit The number of blocks to fetch.
+   * @returns {UseQueryResult<BlocksResponse>} The result of the query, containing
+   * the latest blocks. The query will refetch every 30 seconds.
+   */
 export const useGetLatestBlock = (limit: number) => {
   return useQuery({
     queryKey: ['latestBlocks'],
@@ -150,6 +167,16 @@ export const useGetLatestBlock = (limit: number) => {
 }
 
 
+  /**
+   * Fetches a page of blocks from the Avail API.
+   *
+   * If a `cursor` is provided, fetches the next page of blocks after the
+   * given cursor.
+   *
+   * @param {string | undefined} cursor The cursor to fetch the next page after.
+   * @returns {UseQueryResult<BlocksResponse>} The result of the query, containing
+   * the blocks and a pagination cursor.
+   */
 export const useGetBlock=(cursor?: string)=> {
    return useQuery({
     queryKey: ['blocks', cursor],
@@ -182,6 +209,14 @@ export const useGetLatestExtrinsic=()=>{
 }
 
 
+  /**
+   * Fetches the current chain statistics from the Avail API.
+   *
+   * The query will refetch every 30 seconds.
+   *
+   * @returns {UseQueryResult<ChainStatsResponse>} The result of the query,
+   * containing the current chain statistics.
+   */
 export const useChainStats=()=>{
   return useQuery({
       queryKey: ['chainStats'],
@@ -199,7 +234,6 @@ export const useChainStats=()=>{
     });
 
 }
-/** ***********  ✨ Codeium Command ⭐  ************ */
 /**
  * Custom hook to fetch block details based on the provided block number.
  * 
@@ -211,9 +245,6 @@ export const useChainStats=()=>{
  * @returns An object containing the query result, status, and potential errors.
  * @throws Will throw an error if the block number is invalid.
  */
-
-/** ****  dca6adaa-d46a-4669-9e03-a58f53b3c8dd  ****** */
-
 export function useBlockDetails(blockNumber: string) {
   return useQuery({
     queryKey: ["blockDetails", blockNumber],
@@ -221,7 +252,12 @@ export function useBlockDetails(blockNumber: string) {
       if (!blockNumber || Number.isNaN(Number(blockNumber))) {
         throw new Error("Invalid block number");
       }
-      return fetchGraphQL(GET_BLOCK_BY_NUMBER, { blockNumber: Number(blockNumber) });
+      const modifiedQuery = GET_BLOCK_BY_NUMBER.replace(
+        'equalTo: 1525914',
+        `equalTo: ${blockNumber}`,
+      );
+
+      return fetchGraphQL(modifiedQuery) as Promise<BlocksResponse>;
     },
     staleTime: 60000, // 1 minute
     enabled: !!blockNumber && !Number.isNaN(Number(blockNumber)),
