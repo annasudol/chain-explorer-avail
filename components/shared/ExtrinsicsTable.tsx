@@ -16,8 +16,6 @@ import {
 import truncateString from "@/lib/truncateString";
 import type { Extrinsic } from "@/types/avail";
 
-
-
 export type ExtrinsicsTableProps = {
   extrinsics: Extrinsic[];
   formatDate: (dateString: string) => string;
