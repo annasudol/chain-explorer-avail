@@ -25,34 +25,15 @@
   </p>
 </div>
 
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
 [![Avail Chain Explorer Screen Shot][product-screenshot]](https://chain-explorer-avail.netlify.app/)
+
+<div align="center">
+  <img src="public/images/og-image.png" alt="Avail Chain Explorer" width="600">
+</div>
 
 Avail Chain Explorer is a modern, user-friendly blockchain explorer specifically designed for the Avail network. It allows users to easily explore blocks, transactions, and network statistics on the Avail blockchain.
 
@@ -127,9 +108,6 @@ You can start exploring:
 - Network statistics
 - Connect your wallet to interact with the blockchain
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-See the [open issues](https://github.com/annasudol/chain-explorer-avail/issues) for a full list of proposed features and known issues.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
