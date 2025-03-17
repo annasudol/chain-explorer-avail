@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import type { BlocksResponse, ExtrinsicsResponse } from '@/types/avail';
 
-const AVAIL_INDEXER_URL = 'https://turing-indexer.avail.so/graphql';
+const AVAIL_INDEXER_URL = 'https://turing-indexer.avail.so';
 
 export const fetchGraphQL = async (query: string, variables = {}) => {
   try {
@@ -97,7 +97,7 @@ export const fetchGraphQL = async (query: string, variables = {}) => {
 `;
 
  const GET_BLOCK_BY_NUMBER = `
-  query GetBlockByNumber($blockNumber: Int!) {
+  query GetBlockByNumber {
    blocks(filter: {number: {equalTo: 1525914}}, first: 1) {
       nodes {
         id
@@ -199,6 +199,21 @@ export const useChainStats=()=>{
     });
 
 }
+/** ***********  ✨ Codeium Command ⭐  ************ */
+/**
+ * Custom hook to fetch block details based on the provided block number.
+ * 
+ * Utilizes the `useQuery` hook from `@tanstack/react-query` to perform a GraphQL query
+ * to fetch details of a specific block by number. The query is executed only if a valid
+ * block number is provided. The result is cached for 1 minute.
+ * 
+ * @param blockNumber - The block number for which to fetch details.
+ * @returns An object containing the query result, status, and potential errors.
+ * @throws Will throw an error if the block number is invalid.
+ */
+
+/** ****  dca6adaa-d46a-4669-9e03-a58f53b3c8dd  ****** */
+
 export function useBlockDetails(blockNumber: string) {
   return useQuery({
     queryKey: ["blockDetails", blockNumber],

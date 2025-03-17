@@ -8,8 +8,6 @@ import { useEffect } from "react";
 
 import { useBlockDetails } from "@/lib/graphql";
 
-
-
 const BlockDetailPage = () => {
   const { blockNumber } = useParams<{ blockNumber: string }>();
   // const { data, isLoading, error } = useBlockDetails(blockNumber || "");
