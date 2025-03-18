@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,19 +24,36 @@ const SearchForm = ({
   searchQuery,
   setSearchQuery,
   handleSearch,
-}: SearchFormProps) => (
-  <form onSubmit={handleSearch} className="mb-6 flex items-center space-x-2">
-    <Input
-      placeholder="Search by block number or hash..."
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-      className="flex-1"
-    />
-    <Button type="submit">
-      <Search className="mr-2 size-4" /> Search
-    </Button>
-  </form>
-);
+}: SearchFormProps) => {
+  // Use local state to handle immediate input changes
+  const [inputValue, setInputValue] = useState(searchQuery);
+
+  // Update local state when the parent searchQuery changes
+  useEffect(() => {
+    setInputValue(searchQuery);
+  }, [searchQuery]);
+
+  // Handle input changes with immediate visual feedback
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    // The actual search query update is handled by the parent via debounce
+    setSearchQuery(e.target.value);
+  };
+
+  return (
+    <form onSubmit={handleSearch} className="mb-6 flex items-center space-x-2">
+      <Input
+        placeholder="Search by block number or hash..."
+        value={inputValue}
+        onChange={handleInputChange}
+        className="flex-1"
+      />
+      <Button type="submit">
+        <Search className="mr-2 size-4" /> Search
+      </Button>
+    </form>
+  );
+};
 
 // Content Component
 type ContentProps = {
@@ -53,32 +70,67 @@ const Content = ({ blocks, cursor, setCursor, pageInfo }: ContentProps) => (
   </>
 );
 
+// Debounce function to delay execution
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    // Set a timeout to update the debounced value after the specified delay
+    const timer = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    // Clear the timeout if the value changes before the delay expires
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
 // Main Blocks Component
 const Blocks = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQueryRaw] = useState("");
   const [cursor, setCursor] = useState<string | undefined>(undefined);
+
+  // Use debounce hook to delay search updates
+  const debouncedSearchQuery = useDebounce(searchQuery, 500); // 500ms delay
+
+  // Create a setter that updates the raw searchQuery
+  const setSearchQuery = useCallback((query: string) => {
+    setSearchQueryRaw(query);
+  }, []);
 
   const { data, isLoading, error, refetch } = useGetBlock(cursor);
 
   const blocks = data?.blocks?.edges.map((edge) => edge.node) || [];
   const pageInfo = data?.blocks?.pageInfo;
 
+  // Effect to trigger refetch when debouncedSearchQuery changes
+  useEffect(() => {
+    if (debouncedSearchQuery !== "") {
+      refetch();
+    }
+  }, [debouncedSearchQuery, refetch]);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     refetch();
   };
 
-  const filteredBlocks = searchQuery
+  // Use the debounced search query for filtering
+  const filteredBlocks = debouncedSearchQuery
     ? blocks.filter(
         (block) =>
-          block.number.toString().includes(searchQuery) ||
-          block.hash.toLowerCase().includes(searchQuery.toLowerCase()),
+          block.number.toString().includes(debouncedSearchQuery) ||
+          block.hash.toLowerCase().includes(debouncedSearchQuery.toLowerCase()),
       )
     : blocks;
 
   // Adjust page info when filtering results
   const adjustedPageInfo =
-    searchQuery && pageInfo
+    debouncedSearchQuery && pageInfo
       ? {
           hasNextPage:
             filteredBlocks.length > 0
